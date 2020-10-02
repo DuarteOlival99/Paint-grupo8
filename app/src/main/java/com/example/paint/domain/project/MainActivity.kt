@@ -22,8 +22,11 @@ class MainActivity : AppCompatActivity(),
 //                    supportFragmentManager
 //                )
             }
-            R.id.profile -> {
-                title =  getText(R.string.about).toString()
+            R.id.about -> {
+                title = getText(R.string.about).toString()
+                NavigationManager.goToAbout(
+                    supportFragmentManager
+                )
             }
         }
         drawer.closeDrawer(GravityCompat.START)
