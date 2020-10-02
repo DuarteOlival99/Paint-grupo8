@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.paint.R
+import com.example.paint.ui.fragments.AboutFragment
 import com.example.paint.ui.fragments.PaintFragment
 
 class NavigationManager {
@@ -31,6 +32,13 @@ class NavigationManager {
             placeFragment(
                 fm,
                 PaintFragment()
+            )
+        }
+
+        fun goToAbout(fm: FragmentManager) {
+            placeFragment(
+                fm,
+                AboutFragment()
             )
         }
 
