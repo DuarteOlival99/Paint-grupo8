@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(),
 //                )
             }
             R.id.profile -> {
-                title =  getText(R.string.profile).toString()
+                title =  getText(R.string.about).toString()
             }
         }
         drawer.closeDrawer(GravityCompat.START)
