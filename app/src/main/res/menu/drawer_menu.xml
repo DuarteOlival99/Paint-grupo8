@@ -17,7 +17,7 @@
         <item
             android:id="@+id/about"
             android:icon="@drawable/ic_settings"
-            android:title="@string/profile"
+            android:title="@string/about"
             />
 
     </group>
