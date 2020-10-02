@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <group>
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings"
+            />
+
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/profile"
+            />
+
+    </group>
+
+</menu>
