@@ -30,7 +30,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSplash"
-        app:srcCompat="@drawable/splash_screen"
+        app:srcCompat="@drawable/pedro_foto"
         tools:src="@drawable/splash_screen" />
 
     <ImageView
