@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.paint.R
 import com.example.paint.ui.fragments.AboutFragment
 import com.example.paint.ui.fragments.PaintFragment
+import com.example.paint.ui.fragments.SettingsFragment
 
 class NavigationManager {
 
@@ -43,12 +44,12 @@ class NavigationManager {
         }
 
 
-//        fun goToSettings(fm: FragmentManager) {
-//            placeFragment(
-//                fm,
-//                SettingsFragment()
-//            )
-//        }
+        fun goToSettings(fm: FragmentManager) {
+            placeFragment(
+                fm,
+                SettingsFragment()
+            )
+        }
 
 
     }

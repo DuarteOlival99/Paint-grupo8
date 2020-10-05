@@ -1,7 +1,10 @@
 package com.example.paint.data.local.list
 
+import com.example.paint.R
+
 class ListStorage private constructor() {
 
+    private var backgroundColor : Int? = null
 
     companion object {
 
@@ -17,6 +20,14 @@ class ListStorage private constructor() {
             }
         }
 
+    }
+
+    fun setBackgroundColor(mDefaultColor: Int) {
+        backgroundColor = mDefaultColor
+    }
+
+    fun getBackgroundColor(): Int? {
+        return backgroundColor
     }
 
 }

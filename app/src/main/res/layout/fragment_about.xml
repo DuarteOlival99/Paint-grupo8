@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.AboutFragment"
     android:background="@color/white"
+    android:id="@+id/about"
     >
 
     <TextView

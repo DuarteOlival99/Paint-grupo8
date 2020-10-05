@@ -16,11 +16,17 @@ class MainActivity : AppCompatActivity(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setupDrawerMenu()
         when (item.itemId) {
+            R.id.paint -> {
+                title = getText(R.string.paint).toString()
+                NavigationManager.goToPaint(
+                    supportFragmentManager
+                )
+            }
             R.id.settings -> {
                 title = getText(R.string.settings).toString()
-//                NavigationManager.goToSettings(
-//                    supportFragmentManager
-//                )
+                NavigationManager.goToSettings(
+                    supportFragmentManager
+                )
             }
             R.id.about -> {
                 title = getText(R.string.about).toString()
