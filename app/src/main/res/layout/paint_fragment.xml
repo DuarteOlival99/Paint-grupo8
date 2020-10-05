@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/paint"
+    android:background="@color/background"
     >
 
     <TextView
@@ -15,6 +16,7 @@
         android:layout_marginTop="50dp"
         android:layout_gravity="center"
         android:textSize="20sp"
+        android:textColor="@color/textColor"
         android:text="@string/paint" />
 
 </LinearLayout>

@@ -8,4 +8,8 @@
     <color name="black">#000000</color>
     <color name="settingsButton">#A8C1FF</color>
     <color name="splashColor">#FDFDFE</color>
+    <color name="background">#E6E5E5</color>
+    <color name="textColor">#000000</color>
+
+
 </resources>

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/settings"
+    android:background="@color/background"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mudar_a_cor_de_background"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textStyle="bold"
             app:autoSizeTextType="uniform"
             android:layout_marginStart="20dp"
