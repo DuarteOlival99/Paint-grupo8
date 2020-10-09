@@ -12,5 +12,27 @@
     <string name="mudar_a_cor_de_background">Mudar a cor de background</string>
     <string name="mudar_cor">Mudar Cor</string>
     <string name="desenhem_e_desfrutem">Desenhem e desfrutem!</string>
+    <string name="duarte_olival" translatable="false">Duarte Olival</string>
+    <string name="bruna_vieites" translatable="false">Bruna Vieites</string>
+    <string name="pedro_sobreira" translatable="false">Pedro Sobreira</string>
+    <string name="pedro_51012" translatable="false">51012</string>
+    <string name="bruna_55792" translatable="false">55792</string>
+    <string name="duarte_55736" translatable="false">55736</string>
+    <string name="duarte_linkedin" translatable="false">Duarte Linkedin</string>
+    <string name="bruna_linkedin" translatable="false">Bruna Linkedin</string>
+    <string name="bruna_facebook" translatable="false">Bruna Facebook</string>
+    <string name="bruna_instagram" translatable="false">Bruna Instagram</string>
+    <string name="duarte_facebook" translatable="false">Duarte Facebook</string>
+    <string name="duarte_instagram" translatable="false">Duarte Instagram</string>
+    <string name="sobreira_linkedin" translatable="false">Sobreira Linkedin</string>
+    <string name="sobreira_facebook" translatable="false">Sobreira Facebook</string>
+    <string name="sobreira_instagram" translatable="false">Sobreira Instagram</string>
+    <string name="title_activity_paint" translatable="false">PaintActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="pincel">Pincel</string>
 
 </resources>

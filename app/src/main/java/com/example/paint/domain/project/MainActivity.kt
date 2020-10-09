@@ -1,9 +1,9 @@
 package com.example.paint.domain.project
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.paint.R
 import com.example.paint.ui.utils.NavigationManager
@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.paint -> {
                 title = getText(R.string.paint).toString()
+//                val intent = Intent(this, PaintActivity::class.java).apply {}
+//                startActivity(intent)
                 NavigationManager.goToPaint(
                     supportFragmentManager
                 )
@@ -46,7 +48,9 @@ class MainActivity : AppCompatActivity(),
         setupDrawerMenu()
 
         if (!screenRotated(savedInstanceState)) {
-            NavigationManager.goToPaint(supportFragmentManager)
+            NavigationManager.goToPaint(
+                supportFragmentManager
+            )
         }
 
 

@@ -1,9 +1,10 @@
 package com.example.paint.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
@@ -29,7 +30,22 @@ class PaintFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         //paint.setBackgroundColor(viewModel.getBackgroundColor()!!)
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.pincel_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId;
+        when(item.itemId) {
+            R.id.pincel_menu -> {
+                Toast.makeText(activity as Context,"Tapped on icon",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }
