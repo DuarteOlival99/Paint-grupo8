@@ -1,7 +1,11 @@
 package com.example.paint.domain.project
 
+import android.content.Context
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -39,6 +43,23 @@ class MainActivity : AppCompatActivity(),
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.pincel_menu, menu);
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId;
+        when(item.itemId) {
+            R.id.pincel_menu -> {
+                Toast.makeText(this,"Tapped on icon", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

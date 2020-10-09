@@ -32,20 +32,20 @@ class PaintFragment : Fragment() {
         //paint.setBackgroundColor(viewModel.getBackgroundColor()!!)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.pincel_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId;
-        when(item.itemId) {
-            R.id.pincel_menu -> {
-                Toast.makeText(activity as Context,"Tapped on icon",Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.pincel_menu, menu);
+//        return super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val id = item.itemId;
+//        when(item.itemId) {
+//            R.id.pincel_menu -> {
+//                Toast.makeText(activity as Context,"Tapped on icon",Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        return super.onOptionsItemSelected(item)
+//    }
 
 }
