@@ -28,8 +28,7 @@ class PaintFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        paint.setBackgroundColor(viewModel.getBackgroundColor()!!)
+        //paint.setBackgroundColor(viewModel.getBackgroundColor()!!)
 
     }
 

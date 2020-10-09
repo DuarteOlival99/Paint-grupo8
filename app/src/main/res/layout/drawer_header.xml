@@ -20,7 +20,7 @@
             android:id="@+id/drawer_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Desenhem e desfrutem!"
+            android:text="@string/desenhem_e_desfrutem"
             android:textColor="#FFFFFF"
             android:textStyle="bold"/>
         <TextView
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Grupo 8"
+            android:text="@string/grupo_8"
             android:textColor="#FFFFFF"
             />
 
