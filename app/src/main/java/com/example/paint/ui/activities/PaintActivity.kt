@@ -15,11 +15,11 @@ class PaintActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paint)
 
-//        val canvasFragment : PaintFragment = PaintFragment()
-//        val manager : FragmentManager = supportFragmentManager
-//        manager.beginTransaction()
-//            .replace(R.id.canvas, canvasFragment, canvasFragment.tag)
-//            .commit()
+        val canvasFragment : PaintFragment = PaintFragment()
+        val manager : FragmentManager = supportFragmentManager
+        manager.beginTransaction()
+            .replace(R.id.canvas, canvasFragment, canvasFragment.tag)
+            .commit()
 
     }
 
