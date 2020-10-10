@@ -38,6 +38,7 @@ class PaintFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         //paint.setBackgroundColor(viewModel.getBackgroundColor()!!)
+
     }
 
     @OnClick(R.id.button_up)
@@ -52,12 +53,15 @@ class PaintFragment : Fragment() {
         button_up.visibility = View.VISIBLE
     }
 
+    @OnClick(R.id.textView_brush_paint)
+    fun onClickTextViewBrushPaint(view: View){
+        fragmentManager?.let { pincelChangeDialogFragment().show(childFragmentManager, "pincel change") }
+    }
+
     @OnClick(R.id.textView_color_paint)
     fun onClickTextViewColorPaint(view: View) {
         openColorPicker()
     }
-
-
     private fun openColorPicker() {
         val colorPicker = AmbilWarnaDialog(context, pincelColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog) {}
