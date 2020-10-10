@@ -13,5 +13,9 @@ class PaintLogic() {
         return storage.getBackgroundColor()
     }
 
+    fun setPincelColor(pincelColor: Int) {
+        storage.setPincelColor(pincelColor)
+    }
+
 
 }

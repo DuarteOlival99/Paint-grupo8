@@ -18,6 +18,7 @@
         android:visibility="gone"
         >
         <TextView
+            android:id="@+id/textView_color_paint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cor"
@@ -42,6 +43,8 @@
         </ImageButton>
 
         <TextView
+
+            android:id="@+id/textView_brush_paint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pincel"

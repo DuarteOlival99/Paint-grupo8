@@ -1,10 +1,12 @@
 package com.example.paint.data.local.list
 
+import android.graphics.Color
 import com.example.paint.R
 
 class ListStorage private constructor() {
 
     private var backgroundColor : Int? = null
+    private var brushColor = Color.BLACK
 
     companion object {
 
@@ -28,6 +30,10 @@ class ListStorage private constructor() {
 
     fun getBackgroundColor(): Int? {
         return backgroundColor
+    }
+
+    fun setPincelColor(pincelColor: Int) {
+        brushColor = pincelColor
     }
 
 }

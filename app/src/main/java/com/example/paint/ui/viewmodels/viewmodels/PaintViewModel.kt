@@ -14,6 +14,9 @@ class PaintViewModel (application: Application ) : AndroidViewModel (application
         return paintLogic.getBackgroundColor()
     }
 
+    fun setPincelColor(pincelColor: Int) {
+        paintLogic.setPincelColor(pincelColor)
+    }
 
 
 }

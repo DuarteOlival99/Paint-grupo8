@@ -1,8 +1,10 @@
 package com.example.paint.ui.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.opengl.Visibility
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -14,10 +16,13 @@ import butterknife.OnClick
 import com.example.paint.R
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import kotlinx.android.synthetic.main.paint_fragment.*
+import kotlinx.android.synthetic.main.settings_fragment.*
+import yuku.ambilwarna.AmbilWarnaDialog
 
 class PaintFragment : Fragment() {
 
     private lateinit var viewModel : PaintViewModel
+    private var pincelColor = Color.BLACK
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +51,68 @@ class PaintFragment : Fragment() {
         palete_vertical.visibility = View.GONE
         button_up.visibility = View.VISIBLE
     }
+
+    @OnClick(R.id.textView_color_paint)
+    fun onClickTextViewColorPaint(view: View) {
+        openColorPicker()
+    }
+
+
+    private fun openColorPicker() {
+        val colorPicker = AmbilWarnaDialog(context, pincelColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
+            override fun onCancel(dialog: AmbilWarnaDialog) {}
+            override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
+                pincelColor = color
+
+                viewModel.setPincelColor(pincelColor)
+
+                val pref = PreferenceManager.getDefaultSharedPreferences(context)
+                val editor = pref.edit()
+                editor
+                    .putInt("BACKGROUNDCOLOR", pincelColor)
+                    .apply()
+            }
+        })
+        colorPicker.show()
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
