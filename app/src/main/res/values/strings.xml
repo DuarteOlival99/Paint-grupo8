@@ -34,5 +34,6 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="pincel">Pincel</string>
+    <string name="cor">Cor</string>
 
 </resources>

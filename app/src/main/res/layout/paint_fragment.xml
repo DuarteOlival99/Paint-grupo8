@@ -1,22 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/paint"
     android:background="@color/white"
-    >
+    android:layout_weight="10">
 
-    <TextView
-        android:id="@+id/text_view_id"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/textColor"
-        android:text="@string/paint" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/palete_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cor"
+            android:drawableTop="@drawable/ic_color"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_down"
+            >
+        </TextView>
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/button_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_arrow_drop_down"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+        </ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pincel"
+            android:drawableTop="@drawable/ic_brush_black"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/button_down"
+            >
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/button_up"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_arrow_drop_up"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        >
+
+    </ImageButton>
+
+</RelativeLayout>
