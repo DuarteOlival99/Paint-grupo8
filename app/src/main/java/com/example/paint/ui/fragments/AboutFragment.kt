@@ -41,6 +41,24 @@ class AboutFragment : Fragment() {
         about.setBackgroundColor(viewModel.getBackgroundColor()!!)
     }
 
+    @OnClick(R.id.iconLinkedin_bruna)
+    fun onClickIconLinkedinBruna(view: View){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/brunavieites/"))
+        startActivity(browserIntent)
+    }
+
+    @OnClick(R.id.iconFacebook_bruna)
+    fun onClickIconFacebookBruna(view: View){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/bruna.vieites/"))
+        startActivity(browserIntent)
+    }
+
+    @OnClick(R.id.iconInstagram_bruna)
+    fun onClickIconInstagramBruna(view: View){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/bruna_vieites/"))
+        startActivity(browserIntent)
+    }
+
     @OnClick(R.id.iconLinkedin_duarte)
     fun onClickIconLinkedinDuarte(view: View){
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/duarte-olival-125a98159/"))
