@@ -7,29 +7,30 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:gravity="bottom"
-    android:padding="16dp">
+    android:padding="10dp">
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@mipmap/ic_paint"
             android:id="@+id/imageViewDirections"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             />
         <TextView
             android:id="@+id/drawer_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/desenhem_e_desfrutem"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/textColor"
+            android:textSize="20sp"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/drawer_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:text="@string/grupo_8"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/textColor"
             />
 
 </LinearLayout>

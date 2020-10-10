@@ -3,6 +3,7 @@ package com.example.paint.ui.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import butterknife.OnClick
 import com.example.paint.R
 import com.example.paint.ui.viewmodels.viewmodels.AboutViewModel
 import kotlinx.android.synthetic.main.fragment_about.*
+import kotlin.math.log
 
 
 class AboutFragment : Fragment() {
@@ -37,7 +39,6 @@ class AboutFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         about.setBackgroundColor(viewModel.getBackgroundColor()!!)
     }
 

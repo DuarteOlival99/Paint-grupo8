@@ -1,10 +1,12 @@
 package com.example.paint.ui.activities
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import com.example.paint.R
 import com.example.paint.domain.project.MainActivity
@@ -14,7 +16,7 @@ import kotlin.properties.Delegates
 
 class SplashActivity : AppCompatActivity() {
     lateinit var viewModel: SplashScreenViewModel
-    private var mDefaultColor by Delegates.notNull<Int>()
+    private var mDefaultColor = Color.WHITE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +25,9 @@ class SplashActivity : AppCompatActivity() {
 
         val pref = PreferenceManager.getDefaultSharedPreferences(baseContext)
         pref.apply {
-            val backgroundColor = getInt("BACKGROUNDCOLOR", R.color.white)
+            val backgroundColor = getInt("BACKGROUNDCOLOR", Color.WHITE)
             mDefaultColor = backgroundColor
-            viewModel.setBackgroundColor(backgroundColor)
+            viewModel.setBackgroundColor(mDefaultColor)
         }
 
         val editor = pref.edit()
@@ -34,8 +36,6 @@ class SplashActivity : AppCompatActivity() {
             .apply()
 
         viewModel.setBackgroundColor(mDefaultColor)
-
-
 
         splash()
     }

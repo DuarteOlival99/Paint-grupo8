@@ -3,6 +3,7 @@ package com.example.paint.ui.fragments
 import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.Toast

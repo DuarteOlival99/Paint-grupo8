@@ -22,7 +22,7 @@ class SettingsFragment : Fragment() {
 
     private lateinit var viewModel : SettingsViewModel
     private lateinit var bitmap: Bitmap
-    private var mDefaultColor by Delegates.notNull<Int>()
+    private var mDefaultColor = R.color.white
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
