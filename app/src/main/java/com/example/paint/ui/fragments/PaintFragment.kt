@@ -20,7 +20,7 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import kotlinx.android.synthetic.main.paint_fragment.*
 import yuku.ambilwarna.AmbilWarnaDialog
 
-class PaintFragment : Fragment(), OnColorChange {
+class PaintFragment : Fragment() {
 
     private lateinit var viewModel : PaintViewModel
     private var pincelColor = R.color.colorPaint
@@ -43,13 +43,13 @@ class PaintFragment : Fragment(), OnColorChange {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if((activity as AppCompatActivity).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+        if((activity as AppCompatActivity).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
         {
             // Portrait
             Log.i("Portait", "Portait")
             val manager : FragmentManager = (activity as AppCompatActivity).supportFragmentManager
             manager.beginTransaction()
-                .replace(R.id.paint_canvas, canvasFragment, canvasFragment.tag)
+                .replace(R.id.paint_canvas_8, canvasFragment, canvasFragment.tag)
                 .commit()
 
         } else {
@@ -69,29 +69,29 @@ class PaintFragment : Fragment(), OnColorChange {
     }
 
    override fun onStart() {
-        viewModel.registerListener(this)
-        viewModel.setPaintFragment(true)
+       // viewModel.registerListener(this)
+       // viewModel.setPaintFragment(true)
         super.onStart()
     }
 
     override fun onDestroy() {
-        viewModel.unregisterListener()
-        viewModel.setPaintFragment(false)
+      //  viewModel.unregisterListener()
+        //viewModel.setPaintFragment(false)
         super.onDestroy()
     }
 
     @Optional
     @OnClick(R.id.button_up)
     fun onClickbuttonUp(view: View){
-        palete_vertical.visibility = View.VISIBLE
-        button_up.visibility = View.GONE
+        palete_vertical!!.visibility = View.VISIBLE
+        button_up!!.visibility = View.GONE
     }
 
     @Optional
     @OnClick(R.id.button_down)
     fun onClickbuttonDown(view: View){
-        palete_vertical.visibility = View.GONE
-        button_up.visibility = View.VISIBLE
+        palete_vertical!!.visibility = View.GONE
+        button_up!!.visibility = View.VISIBLE
     }
 
     @Optional
@@ -137,17 +137,17 @@ class PaintFragment : Fragment(), OnColorChange {
         colorPicker.show()
     }
 
-    override fun onColorChange(color: Int) {
-        Log.i("cor muda", "atualizarCor")
-        //if (viewModel.getPaintCriado()){
-            Log.i("cor muda if", "atualizarCorif")
-            canvasFragment.atualizaCorCanvas()
-        //}
-        Log.i("cor mudadepois", "atualizarCordepois")
-
-        //canvasFragment.atualizaCorCanvas()
-        //viewModel.changeColor(color)
-    }
+//    override fun onColorChange(color: Int) {
+//        Log.i("cor muda", "atualizarCor")
+//        //if (viewModel.getPaintCriado()){
+//            Log.i("cor muda if", "atualizarCorif")
+//            canvasFragment.atualizaCorCanvas()
+//        //}
+//        Log.i("cor mudadepois", "atualizarCordepois")
+//
+//        //canvasFragment.atualizaCorCanvas()
+//        //viewModel.changeColor(color)
+//    }
 
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

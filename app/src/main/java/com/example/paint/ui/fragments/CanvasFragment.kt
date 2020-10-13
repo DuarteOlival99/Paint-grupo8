@@ -2,6 +2,7 @@ package com.example.paint.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.example.paint.ui.viewmodels.viewmodels.AboutViewModel
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 
 
-class CanvasFragment : Fragment(), OnColorChange {
+class CanvasFragment : Fragment() {
 
     private lateinit var viewModel : PaintViewModel
     private lateinit var canvasView: MyCanvasView
@@ -38,13 +39,13 @@ class CanvasFragment : Fragment(), OnColorChange {
     }
 
     override fun onStart() {
-        viewModel.registerListener(this)
-        viewModel.setCanvasCriado(true)
+        //viewModel.registerListener(this)
+        //viewModel.setCanvasCriado(true)
         super.onStart()
     }
 
     override fun onDestroy() {
-        viewModel.setCanvasCriado(false)
+//        viewModel.setCanvasCriado(false)
         super.onDestroy()
     }
 
@@ -56,13 +57,6 @@ class CanvasFragment : Fragment(), OnColorChange {
     fun atualizaCorCanvas() {
         if (viewModel.getCanvasCriado()){
             canvasView.atualizaCorCanvas()
-        }
-    }
-
-    override fun onColorChange(color: Int) {
-        Log.i("atualizou", "OK")
-        if (viewModel.getCanvasCriado()){
-            atualizaCorCanvas()
         }
     }
 

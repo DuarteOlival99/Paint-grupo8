@@ -19,13 +19,12 @@
 
         <LinearLayout
             android:id="@+id/paint_canvas_8"
-            android:layout_weight="8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/black"
             android:layout_margin="5dp"
-            >
+            android:layout_weight="8"
+            android:background="@color/black"
+            android:orientation="vertical">
 
         </LinearLayout>
 

@@ -1,14 +1,17 @@
 package com.example.paint.ui.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.util.Log
+import android.view.Display
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
+
 
 private const val STROKE_WIDTH = 12f // has to be floats
 
@@ -51,7 +54,12 @@ class MyCanvasView(context: Context) : View(context) {
         if (dx >= touchTolerance || dy >= touchTolerance) {
             // QuadTo() adds a quadratic bezier from the last point,
             // approaching control point (x1,y1), and ending at (x2,y2).
-            path.quadTo(currentX, currentY, (motionTouchEventX + currentX) / 2, (motionTouchEventY + currentY) / 2)
+            path.quadTo(
+                currentX,
+                currentY,
+                (motionTouchEventX + currentX) / 2,
+                (motionTouchEventY + currentY) / 2
+            )
             currentX = motionTouchEventX
             currentY = motionTouchEventY
             // Draw the path in the extra bitmap to cache it.
@@ -113,6 +121,8 @@ class MyCanvasView(context: Context) : View(context) {
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
+
+        Log.i("size", "$width $height")
         extraBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         extraCanvas = Canvas(extraBitmap)
         //extraCanvas.drawColor(backgroundColor)
