@@ -84,6 +84,36 @@ class PaleteFragment : Fragment() {
         colorPicker.show()
     }
 
+    @OnClick(R.id.bola_preta)
+    fun onClickCorPreta(view: View){
+        //TODO
+    }
+
+    @OnClick(R.id.bola_cinzenta)
+    fun onClickCorCinzenta(view: View){
+
+    }
+
+    @OnClick(R.id.bola_amarela)
+    fun onClickCorAmarela(view: View){
+
+    }
+
+    @OnClick(R.id.bola_vermelha)
+    fun onClickCorVermelha(view: View){
+
+    }
+
+    @OnClick(R.id.bola_verde)
+    fun onClickCorVerde(view: View){
+
+    }
+
+    @OnClick(R.id.bola_azul)
+    fun onClickCorAzul(view: View){
+
+    }
+
 /*    override fun onColorChange(color: Int) {
         Log.i("Palete", "palete")
        //canvasFragment.atualizaCorCanvas()
