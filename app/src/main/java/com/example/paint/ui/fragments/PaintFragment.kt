@@ -20,6 +20,7 @@ class PaintFragment : Fragment() {
 
     private lateinit var viewModel : PaintViewModel
     private var pincelColor = R.color.colorPaint
+    val canvasFragment : CanvasFragment = CanvasFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,6 @@ class PaintFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val canvasFragment : CanvasFragment = CanvasFragment()
         val manager : FragmentManager = (activity as AppCompatActivity).supportFragmentManager
         manager.beginTransaction()
             .replace(R.id.paint_canvas, canvasFragment, canvasFragment.tag)
@@ -71,6 +71,7 @@ class PaintFragment : Fragment() {
                 pincelColor = color
 
                 viewModel.setPincelColor(pincelColor)
+                canvasFragment.teste()
 
                 val pref = PreferenceManager.getDefaultSharedPreferences(context)
                 val editor = pref.edit()

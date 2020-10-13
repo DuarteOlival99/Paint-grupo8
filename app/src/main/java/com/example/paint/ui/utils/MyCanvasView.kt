@@ -76,13 +76,11 @@ class MyCanvasView(context: Context) : View(context) {
     // Set up the paint with which to draw.
     private val paint = Paint().apply {
         Log.i("pincel color", storage.getPincelColor().toString())
-
         if (storage.getDefaultPincelColor()){
             color = drawColor
         }else{
             color = storage.getPincelColor()
         }
-
 
         // Smooths out edges of what is drawn without affecting shape.
         isAntiAlias = true
@@ -92,6 +90,26 @@ class MyCanvasView(context: Context) : View(context) {
         strokeJoin = Paint.Join.ROUND // default: MITER
         strokeCap = Paint.Cap.ROUND // default: BUTT
         strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
+    }
+
+    fun teste() {
+        paint.apply {
+            Log.i("pincel color", storage.getPincelColor().toString())
+            if (storage.getDefaultPincelColor()){
+                color = drawColor
+            }else{
+                color = storage.getPincelColor()
+            }
+
+            // Smooths out edges of what is drawn without affecting shape.
+            isAntiAlias = true
+            // Dithering affects how colors with higher-precision than the device are down-sampled.
+            isDither = true
+            style = Paint.Style.STROKE // default: FILL
+            strokeJoin = Paint.Join.ROUND // default: MITER
+            strokeCap = Paint.Cap.ROUND // default: BUTT
+            strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
+        }
     }
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {

@@ -13,6 +13,7 @@ import com.example.paint.ui.viewmodels.viewmodels.AboutViewModel
 class CanvasFragment : Fragment() {
 
     private lateinit var viewModel : AboutViewModel
+    private lateinit var canvasView: MyCanvasView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +26,15 @@ class CanvasFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val myCanvasView = MyCanvasView(activity!!.applicationContext)
+        canvasView = MyCanvasView(activity!!.applicationContext)
         // myCanvasView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
-        myCanvasView.contentDescription = getString(R.string.canvasContentDescription)
+        canvasView.contentDescription = getString(R.string.canvasContentDescription)
 
-        return myCanvasView
+        return canvasView
+    }
+
+    fun teste() {
+        canvasView.teste()
     }
 
 
