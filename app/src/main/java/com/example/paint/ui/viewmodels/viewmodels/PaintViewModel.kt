@@ -2,6 +2,7 @@ package com.example.paint.ui.viewmodels.viewmodels
 
 import android.app.Application
 import android.graphics.Color
+import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.lifecycle.AndroidViewModel
 import com.example.paint.ui.listeners.OnColorChange
@@ -14,14 +15,18 @@ class PaintViewModel (application: Application ) : AndroidViewModel (application
 
     private var cor = Color.BLACK
 
+    fun paint(listener: OnColorChange, color: Int){
+        listener.onColorChange(color)
+    }
 
     fun notifyOnColorChanged() {
+        Log.i("Notify", listener.toString())
         listener?.onColorChange(cor)
     }
 
     fun registerListener(listener: OnColorChange) {
         this.listener = listener
-        listener?.onColorChange(cor)
+        //listener.onColorChange(cor)
     }
 
     fun unregisterListener() {

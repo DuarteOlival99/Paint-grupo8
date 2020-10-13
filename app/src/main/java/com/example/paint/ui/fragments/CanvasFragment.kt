@@ -54,7 +54,9 @@ class CanvasFragment : Fragment(), OnColorChange {
     }
 
     fun atualizaCorCanvas() {
-        canvasView.atualizaCorCanvas()
+        if (viewModel.getCanvasCriado()){
+            canvasView.atualizaCorCanvas()
+        }
     }
 
     override fun onColorChange(color: Int) {

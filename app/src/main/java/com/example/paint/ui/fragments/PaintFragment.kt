@@ -139,10 +139,10 @@ class PaintFragment : Fragment(), OnColorChange {
 
     override fun onColorChange(color: Int) {
         Log.i("cor muda", "atualizarCor")
-        if (viewModel.getPaintCriado()){
+        //if (viewModel.getPaintCriado()){
             Log.i("cor muda if", "atualizarCorif")
             canvasFragment.atualizaCorCanvas()
-        }
+        //}
         Log.i("cor mudadepois", "atualizarCordepois")
 
         //canvasFragment.atualizaCorCanvas()

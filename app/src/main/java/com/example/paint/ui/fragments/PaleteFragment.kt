@@ -1,6 +1,7 @@
 package com.example.paint.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -76,7 +77,7 @@ class PaleteFragment : Fragment(), OnColorChange {
                 canvasColor = color
 
                 viewModel.setCanvasColor(canvasColor)
-                viewModel.changeColor(canvasColor)
+                viewModel.paint(this@PaleteFragment, canvasColor)
                 //canvasFragment.atualizaCorCanvas()
             }
         })
@@ -84,6 +85,7 @@ class PaleteFragment : Fragment(), OnColorChange {
     }
 
     override fun onColorChange(color: Int) {
-       // canvasFragment.atualizaCorCanvas()
+        Log.i("Palete", "palete")
+       //canvasFragment.atualizaCorCanvas()
     }
 }
