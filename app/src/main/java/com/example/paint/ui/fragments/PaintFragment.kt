@@ -43,7 +43,7 @@ class PaintFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if((activity as AppCompatActivity).getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+        if((activity as AppCompatActivity).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
         {
             // Portrait
             Log.i("Portait", "Portait")
