@@ -22,6 +22,8 @@ class PaleteFragment : Fragment() {
     private var pincelColor = R.color.colorPaint
     private var canvasColor = R.color.colorBackground
 
+    val canvasFragment : CanvasFragment = CanvasFragment()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +39,7 @@ class PaleteFragment : Fragment() {
         //viewModel.registerListener(this)
         super.onStart()
     }
+
 
     @Optional
     @OnClick(R.id.textView_brush_paint)
@@ -81,4 +84,8 @@ class PaleteFragment : Fragment() {
         colorPicker.show()
     }
 
+/*    override fun onColorChange(color: Int) {
+        Log.i("Palete", "palete")
+       //canvasFragment.atualizaCorCanvas()
+    }*/
 }
