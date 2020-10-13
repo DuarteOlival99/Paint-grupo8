@@ -1,28 +1,25 @@
 package com.example.paint.ui.fragments
 
-import android.content.Context
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.paint.R
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import kotlinx.android.synthetic.main.paint_fragment.*
-import kotlinx.android.synthetic.main.settings_fragment.*
 import yuku.ambilwarna.AmbilWarnaDialog
 
 class PaintFragment : Fragment() {
 
     private lateinit var viewModel : PaintViewModel
-    private var pincelColor = Color.BLACK
+    private var pincelColor = R.color.colorPaint
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +32,14 @@ class PaintFragment : Fragment() {
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-        //paint.setBackgroundColor(viewModel.getBackgroundColor()!!)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val canvasFragment : CanvasFragment = CanvasFragment()
+        val manager : FragmentManager = (activity as AppCompatActivity).supportFragmentManager
+        manager.beginTransaction()
+            .replace(R.id.paint_canvas, canvasFragment, canvasFragment.tag)
+            .commit()
 
     }
 
@@ -55,7 +57,7 @@ class PaintFragment : Fragment() {
 
     @OnClick(R.id.textView_brush_paint)
     fun onClickTextViewBrushPaint(view: View){
-        fragmentManager?.let { pincelChangeDialogFragment().show(childFragmentManager, "pincel change") }
+        fragmentManager?.let { PincelChangeDialogFragment().show(childFragmentManager, "pincel change") }
     }
 
     @OnClick(R.id.textView_color_paint)
@@ -79,37 +81,6 @@ class PaintFragment : Fragment() {
         })
         colorPicker.show()
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -4,12 +4,16 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <color name="colorBackground">#918F8E</color>
+    <color name="colorPaint">#FFFFEB3B</color>
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="settingsButton">#A8C1FF</color>
     <color name="splashColor">#FDFDFE</color>
     <color name="background">#FFFFFF</color>
     <color name="textColor">#000000</color>
+    <color name="grey">#919191</color>
 
 
 </resources>

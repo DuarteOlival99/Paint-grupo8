@@ -1,5 +1,9 @@
 package com.example.paint.ui.fragments
 
+import android.accessibilityservice.GestureDescription
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +17,8 @@ import butterknife.ButterKnife
 import com.example.paint.R
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 
-class pincelChangeDialogFragment : DialogFragment() {
+
+class PincelChangeDialogFragment : DialogFragment() {
     private lateinit var viewModel : PaintViewModel
 
     override fun onCreateView(
@@ -24,6 +29,22 @@ class pincelChangeDialogFragment : DialogFragment() {
         viewModel = ViewModelProviders.of(this).get(PaintViewModel::class.java)
         ButterKnife.bind(this, view)
         return view
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+
+        val inflater = LayoutInflater.from(context)
+        val newFileView: View = inflater.inflate(R.layout.pincel_change_fragment, null)
+        builder.setView(newFileView)
+
+        builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+            // on success
+        })
+        builder.setNegativeButton("Cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+
+        return builder.create()
     }
 
     override fun onDestroy() {
