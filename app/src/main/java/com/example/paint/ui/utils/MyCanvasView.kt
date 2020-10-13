@@ -9,7 +9,6 @@ import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
-import com.example.paint.ui.listeners.OnPincelColorChange
 
 private const val STROKE_WIDTH = 12f // has to be floats
 
@@ -116,8 +115,8 @@ class MyCanvasView(context: Context) : View(context) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
         extraBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         extraCanvas = Canvas(extraBitmap)
-        extraCanvas.drawColor(backgroundColor)
-
+        //extraCanvas.drawColor(backgroundColor)
+        atualizaCorCanvas()
         //if (::extraBitmap.isInitialized) extraBitmap.recycle()
 
         // Calculate a rectangular frame around the picture.
@@ -133,4 +132,11 @@ class MyCanvasView(context: Context) : View(context) {
         //canvas.drawRect(frame, paint)
     }
 
+    fun atualizaCorCanvas() {
+        if (storage.getDefaultCanvasColor()){
+            extraCanvas.drawColor(backgroundColor)
+        }else{
+            extraCanvas.drawColor(storage.getCanvasColor())
+        }
+    }
 }

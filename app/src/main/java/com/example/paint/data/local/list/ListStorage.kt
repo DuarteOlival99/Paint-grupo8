@@ -8,6 +8,12 @@ class ListStorage private constructor() {
     private var backgroundColor : Int? = null
     private var brushColor = R.color.colorPaint
     private var paintColorDefault = true
+    private var paintColorCanvas = true
+    private var canvasColor = R.color.colorBackground
+    private var canvasCriado = false
+    private var paintCriado = false
+
+
 
     companion object {
 
@@ -46,6 +52,34 @@ class ListStorage private constructor() {
 
     fun getDefaultPincelColor(): Boolean {
         return paintColorDefault
+    }
+
+    fun setCanvasColor(canvasColor: Int) {
+       this.canvasColor = canvasColor
+        paintColorCanvas = false
+    }
+
+    fun getCanvasColor(): Int {
+        return canvasColor
+    }
+
+    fun getDefaultCanvasColor(): Boolean {
+        return paintColorCanvas
+    }
+
+    fun setCanvasCriado(canvas: Boolean){
+        canvasCriado = canvas
+    }
+
+    fun getCanvasCriado(): Boolean{
+        return canvasCriado
+    }
+
+    fun setPaintFragment(paint: Boolean) {
+        paintCriado = paint
+    }
+    fun getPaintCriado(): Boolean{
+        return paintCriado
     }
 
 }

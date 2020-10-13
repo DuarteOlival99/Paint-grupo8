@@ -17,5 +17,24 @@ class PaintLogic() {
         storage.setPincelColor(pincelColor)
     }
 
+    fun setCanvasColor(canvasColor: Int) {
+        storage.setCanvasColor(canvasColor)
+    }
+
+    fun getCanvasCriado(): Boolean {
+        return storage.getCanvasCriado()
+    }
+
+    fun setCanvasCriado(canvas: Boolean){
+        storage.setCanvasCriado(canvas)
+    }
+
+    fun setPaintFragment(paint: Boolean) {
+        storage.setPaintFragment(paint)
+    }
+
+    fun getPaintCriado(): Boolean{
+        return storage.getPaintCriado()
+    }
 
 }
