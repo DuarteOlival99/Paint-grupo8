@@ -78,6 +78,12 @@ class AboutFragment : Fragment() {
         startActivity(browserIntent)
     }
 
+    @OnClick(R.id.iconFacebook_sobreira)
+    fun onClickIconFacebookSobreira(view: View){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/profile.php?id=100000551397660"))
+        startActivity(browserIntent)
+    }
+
 
 
 }

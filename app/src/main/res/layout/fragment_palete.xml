@@ -9,10 +9,81 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cores"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/bola_preta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/bola_preta"
+            app:layout_constraintBottom_toTopOf="@id/bola_amarela"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/bola_cinzenta"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/bola_cinzenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/bola_preta"
+            app:layout_constraintBottom_toTopOf="@id/bola_vermelha"
+            app:layout_constraintLeft_toRightOf="@id/bola_preta"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/grey" />
+
+        <ImageView
+            android:id="@+id/bola_amarela"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/bola_preta"
+            app:layout_constraintBottom_toTopOf="@id/bola_azul"
+            app:layout_constraintLeft_toLeftOf="@id/bola_preta"
+            app:layout_constraintRight_toRightOf="@id/bola_preta"
+            app:layout_constraintTop_toBottomOf="@id/bola_preta"
+            app:tint="@color/yellow" />
+
+        <ImageView
+            android:id="@+id/bola_vermelha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/bola_preta"
+            app:layout_constraintBottom_toTopOf="@id/bola_verde"
+            app:layout_constraintLeft_toLeftOf="@id/bola_cinzenta"
+            app:layout_constraintRight_toRightOf="@id/bola_cinzenta"
+            app:layout_constraintTop_toBottomOf="@id/bola_cinzenta"
+            app:tint="@color/red" />
+
+        <ImageView
+            android:id="@+id/bola_azul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/bola_preta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/bola_preta"
+            app:layout_constraintRight_toRightOf="@id/bola_preta"
+            app:layout_constraintTop_toBottomOf="@id/bola_amarela"
+            app:tint="@color/blue" />
+
+        <ImageView
+            android:id="@+id/bola_verde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/bola_preta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/bola_cinzenta"
+            app:layout_constraintRight_toRightOf="@id/bola_cinzenta"
+            app:layout_constraintTop_toBottomOf="@id/bola_vermelha"
+            app:tint="@color/green" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
