@@ -49,7 +49,7 @@ class PaintFragment : Fragment(), OnColorChange {
             Log.i("Portait", "Portait")
             val manager : FragmentManager = (activity as AppCompatActivity).supportFragmentManager
             manager.beginTransaction()
-                .replace(R.id.paint_canvas, canvasFragment, canvasFragment.tag)
+                .replace(R.id.paint_canvas_8, canvasFragment, canvasFragment.tag)
                 .commit()
 
         } else {
