@@ -16,7 +16,7 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import yuku.ambilwarna.AmbilWarnaDialog
 
 
-class PaleteFragment : Fragment(), OnColorChange {
+class PaleteFragment : Fragment() {
     private lateinit var viewModel : PaintViewModel
 
     private var pincelColor = R.color.colorPaint
@@ -36,7 +36,7 @@ class PaleteFragment : Fragment(), OnColorChange {
     }
 
     override fun onStart() {
-        viewModel.registerListener(this)
+        //viewModel.registerListener(this)
         super.onStart()
     }
 
@@ -59,7 +59,7 @@ class PaleteFragment : Fragment(), OnColorChange {
                 pincelColor = color
 
                 viewModel.setPincelColor(pincelColor)
-                canvasFragment.atualizaCorPicenl()
+                //canvasFragment.atualizaCorPicenl()
             }
         })
         colorPicker.show()
@@ -77,15 +77,15 @@ class PaleteFragment : Fragment(), OnColorChange {
                 canvasColor = color
 
                 viewModel.setCanvasColor(canvasColor)
-                viewModel.paint(this@PaleteFragment, canvasColor)
+                //viewModel.paint(this@PaleteFragment, canvasColor)
                 //canvasFragment.atualizaCorCanvas()
             }
         })
         colorPicker.show()
     }
 
-    override fun onColorChange(color: Int) {
+/*    override fun onColorChange(color: Int) {
         Log.i("Palete", "palete")
        //canvasFragment.atualizaCorCanvas()
-    }
+    }*/
 }

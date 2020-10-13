@@ -20,7 +20,7 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import kotlinx.android.synthetic.main.paint_fragment.*
 import yuku.ambilwarna.AmbilWarnaDialog
 
-class PaintFragment : Fragment(), OnColorChange {
+class PaintFragment : Fragment(){
 
     private lateinit var viewModel : PaintViewModel
     private var pincelColor = R.color.colorPaint
@@ -69,14 +69,14 @@ class PaintFragment : Fragment(), OnColorChange {
     }
 
    override fun onStart() {
-        viewModel.registerListener(this)
-        viewModel.setPaintFragment(true)
+        //viewModel.registerListener(this)
+        //viewModel.setPaintFragment(true)
         super.onStart()
     }
 
     override fun onDestroy() {
-        viewModel.unregisterListener()
-        viewModel.setPaintFragment(false)
+        //viewModel.unregisterListener()
+        // viewModel.setPaintFragment(false)
         super.onDestroy()
     }
 
@@ -137,7 +137,7 @@ class PaintFragment : Fragment(), OnColorChange {
         colorPicker.show()
     }
 
-    override fun onColorChange(color: Int) {
+   /* override fun onColorChange(color: Int) {
         Log.i("cor muda", "atualizarCor")
         //if (viewModel.getPaintCriado()){
             Log.i("cor muda if", "atualizarCorif")
@@ -148,7 +148,7 @@ class PaintFragment : Fragment(), OnColorChange {
         //canvasFragment.atualizaCorCanvas()
         //viewModel.changeColor(color)
     }
-
+*/
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 //        inflater.inflate(R.menu.pincel_menu, menu);
