@@ -92,7 +92,7 @@ class MyCanvasView(context: Context) : View(context) {
         strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
     }
 
-    fun teste() {
+    fun atualizaCorPicenl() {
         paint.apply {
             Log.i("pincel color", storage.getPincelColor().toString())
             if (storage.getDefaultPincelColor()){

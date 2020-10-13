@@ -71,7 +71,7 @@ class PaintFragment : Fragment() {
                 pincelColor = color
 
                 viewModel.setPincelColor(pincelColor)
-                canvasFragment.teste()
+                canvasFragment.atualizaCorPicenl()
 
                 val pref = PreferenceManager.getDefaultSharedPreferences(context)
                 val editor = pref.edit()

@@ -33,8 +33,8 @@ class CanvasFragment : Fragment() {
         return canvasView
     }
 
-    fun teste() {
-        canvasView.teste()
+    fun atualizaCorPicenl() {
+        canvasView.atualizaCorPicenl()
     }
 
 
