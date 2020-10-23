@@ -1,5 +1,6 @@
 package com.example.paint.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,7 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import yuku.ambilwarna.AmbilWarnaDialog
 
 
-class PaleteFragment : Fragment() , OnColorChange {
+class PaleteFragment : Fragment() {
     private lateinit var viewModel : PaintViewModel
 
     private var pincelColor = R.color.colorPaint
@@ -36,12 +37,10 @@ class PaleteFragment : Fragment() , OnColorChange {
     }
 
     override fun onStart() {
-        viewModel.registerListener(this)
         super.onStart()
     }
 
     override fun onDestroy() {
-        viewModel.unregisterListener()
         super.onDestroy()
     }
 
@@ -49,7 +48,7 @@ class PaleteFragment : Fragment() , OnColorChange {
     @Optional
     @OnClick(R.id.textView_brush_paint)
     fun onClickTextViewBrushPaint(view: View){
-        fragmentManager?.let { PincelChangeDialogFragment().show(
+        fragmentManager?.let { PincelChangeDialogFragmentHorizontal().show(
             childFragmentManager,
             "pincel change"
         ) }
@@ -70,7 +69,7 @@ class PaleteFragment : Fragment() , OnColorChange {
                     pincelColor = color
 
                     viewModel.setPincelColor(pincelColor)
-                    //canvasFragment.atualizaCorPicenl()
+                    alteraCorPaint()
                 }
             })
         colorPicker.show()
@@ -93,17 +92,24 @@ class PaleteFragment : Fragment() , OnColorChange {
 
                     viewModel.setCanvasColor(canvasColor)
                     alteraCorCanvas()
-                    //viewModel.notifyOnColorChanged()
-                    //viewModel.paint(this@PaleteFragment, canvasColor)
-                    //canvasFragment.atualizaCorCanvas()
                 }
             })
         colorPicker.show()
     }
 
     fun alteraCorCanvas(){
-        val fragment = parentFragmentManager.findFragmentById(R.id.paint) as PaintFragment
-        fragment.atualizaCanvas()
+        val fragment = parentFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+        fragment.atualizaCorCanvas()
+    }
+
+    fun alteraCorPaint(){
+        val fragment = parentFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+        fragment.atualizaCorPicenl()
+    }
+
+    fun atualizaPincelEspessura(){
+        val fragment = parentFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+        fragment.atualizaPincelEspessura()
     }
 
     @OnClick(R.id.bola_preta)
@@ -134,10 +140,6 @@ class PaleteFragment : Fragment() , OnColorChange {
     @OnClick(R.id.bola_azul)
     fun onClickCorAzul(view: View){
 
-    }
-
-    override fun onColorChange(color: Int) {
-        Log.i("paleteFragment", color.toString())
     }
 
 /*    override fun onColorChange(color: Int) {

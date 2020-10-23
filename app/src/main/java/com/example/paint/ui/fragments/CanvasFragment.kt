@@ -38,13 +38,10 @@ class CanvasFragment : Fragment(){
     }
 
     override fun onStart() {
-        //viewModel.registerListener(this)
-        viewModel.setCanvasCriado(true)
         super.onStart()
     }
 
     override fun onDestroy() {
-        //viewModel.setCanvasCriado(false)
         super.onDestroy()
     }
 
@@ -54,20 +51,11 @@ class CanvasFragment : Fragment(){
     }
 
     fun atualizaCorCanvas() {
-        if (viewModel.getCanvasCriado()){
-            canvasView.atualizaCorCanvas()
-        }
+        canvasView.atualizaCorCanvas()
     }
 
     fun atualizaPincelEspessura() {
         canvasView.atualizaPincelEspessura()
     }
-
-/*    override fun onColorChange(color: Int) {
-        Log.i("atualizou", "OK")
-        if (viewModel.getCanvasCriado()){
-            atualizaCorCanvas()
-        }
-    }*/
 
 }

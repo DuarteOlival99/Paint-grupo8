@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/paint"
+    android:id="@+id/paintFragment"
     android:background="@color/white"
     android:layout_weight="10">
 

@@ -11,35 +11,12 @@ import com.example.paint.ui.viewmodels.logic.PaintLogic
 
 class PaintViewModel (application: Application ) : AndroidViewModel (application) {
     private val paintLogic = PaintLogic()
-    private var listener: OnColorChange? = null
 
     private var cor = Color.BLACK
 
-    fun paint(listener: OnColorChange, color: Int){
-        listener.onColorChange(color)
-    }
-
-    fun notifyOnColorChanged() {
-        Log.i("Notify", listener.toString())
-        listener?.onColorChange(getCanvasColor())
-    }
-
-    fun registerListener(listener: OnColorChange) {
-        this.listener = listener
-        //listener.onColorChange(cor)
-    }
-
-    fun unregisterListener() {
-        listener = null
-    }
 
     fun getCanvasColor() : Int {
         return paintLogic.getCanvasColor()
-    }
-
-    fun changeColor(color: Int){
-        cor = color
-        notifyOnColorChanged()
     }
 
     fun getBackgroundColor(): Int? {

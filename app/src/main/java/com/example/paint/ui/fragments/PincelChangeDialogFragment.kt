@@ -43,6 +43,7 @@ class PincelChangeDialogFragment : DialogFragment() {
         val newFileView: View = inflater.inflate(R.layout.pincel_change_fragment, null)
         builder.setView(newFileView)
 
+        pincelEspessura = viewModel.getPincelEspessura()
         seekBar = newFileView.seek_bar
         newFileView.pincel_STROKE_WIDTH_numero.text = pincelEspessura.toString()
         seekBar.progress = pincelEspessura
@@ -57,6 +58,7 @@ class PincelChangeDialogFragment : DialogFragment() {
 
         builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
             viewModel.setPincelEspessura(pincelEspessura)
+            Log.i("pincelEspessura", pincelEspessura.toString())
             dismiss()
             // on success
         })

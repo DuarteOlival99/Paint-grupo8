@@ -94,7 +94,12 @@ class MyCanvasView(context: Context) : View(context) {
         style = Paint.Style.STROKE // default: FILL
         strokeJoin = Paint.Join.ROUND // default: MITER
         strokeCap = Paint.Cap.ROUND // default: BUTT
-        strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
+        if (storage.getDefaultPincelEspessuraColor()){
+            strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
+        }else{
+            strokeWidth = storage.getPincelEspessura().toFloat()
+        }
+
     }
 
     fun atualizaCorPicenl() {

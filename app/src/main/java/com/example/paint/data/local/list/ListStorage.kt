@@ -9,6 +9,7 @@ class ListStorage private constructor() {
     private var brushColor = R.color.colorPaint
     private var paintColorDefault = true
     private var paintColorCanvas = true
+    private var paintPincelEspessuraDefault = true
     private var canvasColor = R.color.colorBackground
     private var canvasCriado = false
     private var paintCriado = false
@@ -85,6 +86,10 @@ class ListStorage private constructor() {
 
     fun getPincelEspessura(): Int {
         return pincelEspessura
+    }
+
+    fun getDefaultPincelEspessuraColor() : Boolean {
+        return paintPincelEspessuraDefault
     }
 
     fun setPincelEspessura(pincelEspessura : Int) {
