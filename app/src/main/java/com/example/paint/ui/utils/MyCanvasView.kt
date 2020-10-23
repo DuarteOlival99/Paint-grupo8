@@ -2,10 +2,10 @@ package com.example.paint.ui.utils
 
 import android.content.Context
 import android.graphics.*
+import android.util.AttributeSet
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewConfiguration
+import android.view.*
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
@@ -13,7 +13,8 @@ import com.example.paint.data.local.list.ListStorage
 
 private const val STROKE_WIDTH = 12f // has to be floats
 
-class MyCanvasView(context: Context) : View(context) {
+class MyCanvasView(context: Context?, gestureDetector: GestureDetector) : View(context) , View.OnTouchListener {
+
 
     private val storage = ListStorage.getInstance()
     private lateinit var extraCanvas: Canvas
@@ -32,6 +33,13 @@ class MyCanvasView(context: Context) : View(context) {
     private val touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
     private lateinit var frame: Rect
+
+    private var listener : GestureDetector
+
+    init {
+        listener = gestureDetector
+        setOnTouchListener(this)
+    }
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -149,4 +157,11 @@ class MyCanvasView(context: Context) : View(context) {
             strokeWidth = storage.getPincelEspessura().toFloat()
         }
     }
+
+
+    override fun onTouch(view: View?, event: MotionEvent?): Boolean {
+        listener.onTouchEvent(event)
+        return true   //indica se evento foi manipulado com sucesso
+    }
+
 }
