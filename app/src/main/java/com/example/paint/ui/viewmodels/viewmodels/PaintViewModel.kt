@@ -21,7 +21,7 @@ class PaintViewModel (application: Application ) : AndroidViewModel (application
 
     fun notifyOnColorChanged() {
         Log.i("Notify", listener.toString())
-        listener?.onColorChange(cor)
+        listener?.onColorChange(getCanvasColor())
     }
 
     fun registerListener(listener: OnColorChange) {
@@ -31,6 +31,10 @@ class PaintViewModel (application: Application ) : AndroidViewModel (application
 
     fun unregisterListener() {
         listener = null
+    }
+
+    fun getCanvasColor() : Int {
+        return paintLogic.getCanvasColor()
     }
 
     fun changeColor(color: Int){
@@ -64,5 +68,13 @@ class PaintViewModel (application: Application ) : AndroidViewModel (application
 
     fun getPaintCriado(): Boolean{
         return paintLogic.getPaintCriado()
+    }
+
+    fun getPincelEspessura(): Int {
+        return paintLogic.getPincelEspessura()
+    }
+
+    fun setPincelEspessura(pincelEspessura: Int) {
+        paintLogic.setPincelEspessura(pincelEspessura)
     }
 }

@@ -39,7 +39,7 @@ class CanvasFragment : Fragment(){
 
     override fun onStart() {
         //viewModel.registerListener(this)
-        //viewModel.setCanvasCriado(true)
+        viewModel.setCanvasCriado(true)
         super.onStart()
     }
 
@@ -57,6 +57,10 @@ class CanvasFragment : Fragment(){
         if (viewModel.getCanvasCriado()){
             canvasView.atualizaCorCanvas()
         }
+    }
+
+    fun atualizaPincelEspessura() {
+        canvasView.atualizaPincelEspessura()
     }
 
 /*    override fun onColorChange(color: Int) {

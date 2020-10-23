@@ -2,10 +2,10 @@ package com.example.paint.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -16,7 +16,7 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import yuku.ambilwarna.AmbilWarnaDialog
 
 
-class PaleteFragment : Fragment() {
+class PaleteFragment : Fragment() , OnColorChange {
     private lateinit var viewModel : PaintViewModel
 
     private var pincelColor = R.color.colorPaint
@@ -36,15 +36,23 @@ class PaleteFragment : Fragment() {
     }
 
     override fun onStart() {
-        //viewModel.registerListener(this)
+        viewModel.registerListener(this)
         super.onStart()
+    }
+
+    override fun onDestroy() {
+        viewModel.unregisterListener()
+        super.onDestroy()
     }
 
 
     @Optional
     @OnClick(R.id.textView_brush_paint)
     fun onClickTextViewBrushPaint(view: View){
-        fragmentManager?.let { PincelChangeDialogFragment().show(childFragmentManager, "pincel change") }
+        fragmentManager?.let { PincelChangeDialogFragment().show(
+            childFragmentManager,
+            "pincel change"
+        ) }
     }
 
     @Optional
@@ -53,15 +61,18 @@ class PaleteFragment : Fragment() {
         openColorPickerPincel()
     }
     private fun openColorPickerPincel() {
-        val colorPicker = AmbilWarnaDialog(context, pincelColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
-            override fun onCancel(dialog: AmbilWarnaDialog) {}
-            override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
-                pincelColor = color
+        val colorPicker = AmbilWarnaDialog(
+            context,
+            pincelColor,
+            object : AmbilWarnaDialog.OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog) {}
+                override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
+                    pincelColor = color
 
-                viewModel.setPincelColor(pincelColor)
-                //canvasFragment.atualizaCorPicenl()
-            }
-        })
+                    viewModel.setPincelColor(pincelColor)
+                    //canvasFragment.atualizaCorPicenl()
+                }
+            })
         colorPicker.show()
     }
 
@@ -70,18 +81,29 @@ class PaleteFragment : Fragment() {
     fun onClickTextViewColorPaintCanvas(view: View) {
         openColorPickerCanvas()
     }
-    private fun openColorPickerCanvas() {
-        val colorPicker = AmbilWarnaDialog(context, canvasColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
-            override fun onCancel(dialog: AmbilWarnaDialog) {}
-            override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
-                canvasColor = color
 
-                viewModel.setCanvasColor(canvasColor)
-                //viewModel.paint(this@PaleteFragment, canvasColor)
-                //canvasFragment.atualizaCorCanvas()
-            }
-        })
+    private fun openColorPickerCanvas() {
+        val colorPicker = AmbilWarnaDialog(
+            context,
+            canvasColor,
+            object : AmbilWarnaDialog.OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog) {}
+                override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
+                    canvasColor = color
+
+                    viewModel.setCanvasColor(canvasColor)
+                    alteraCorCanvas()
+                    //viewModel.notifyOnColorChanged()
+                    //viewModel.paint(this@PaleteFragment, canvasColor)
+                    //canvasFragment.atualizaCorCanvas()
+                }
+            })
         colorPicker.show()
+    }
+
+    fun alteraCorCanvas(){
+        val fragment = parentFragmentManager.findFragmentById(R.id.paint) as PaintFragment
+        fragment.atualizaCanvas()
     }
 
     @OnClick(R.id.bola_preta)
@@ -112,6 +134,10 @@ class PaleteFragment : Fragment() {
     @OnClick(R.id.bola_azul)
     fun onClickCorAzul(view: View){
 
+    }
+
+    override fun onColorChange(color: Int) {
+        Log.i("paleteFragment", color.toString())
     }
 
 /*    override fun onColorChange(color: Int) {

@@ -35,14 +35,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cor"
-            app:layout_constraintLeft_toRightOf="@id/textView_color_paint_canvas"
+            app:layout_constraintLeft_toRightOf="@id/textView_color_paint_canvas_vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/button_down"
             app:drawableTopCompat="@drawable/ic_color">
         </TextView>
         <TextView
-            android:id="@+id/textView_color_paint_canvas"
+            android:id="@+id/textView_color_paint_canvas_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cor_canvas"

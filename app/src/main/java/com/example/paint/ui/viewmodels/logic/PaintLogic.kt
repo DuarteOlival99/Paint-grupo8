@@ -37,4 +37,16 @@ class PaintLogic() {
         return storage.getPaintCriado()
     }
 
+    fun getCanvasColor(): Int {
+        return storage.getCanvasColor()
+    }
+
+    fun getPincelEspessura(): Int {
+        return storage.getPincelEspessura()
+    }
+
+    fun setPincelEspessura(pincelEspessura: Int) {
+        storage.setPincelEspessura(pincelEspessura)
+    }
+
 }

@@ -42,5 +42,6 @@
     <string name="cor_canvas">cor canvas</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="atual">Atual:</string>
 
 </resources>

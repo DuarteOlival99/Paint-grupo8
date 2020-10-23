@@ -1,10 +1,8 @@
 package com.example.paint.ui.utils
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.util.Log
-import android.view.Display
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -107,15 +105,6 @@ class MyCanvasView(context: Context) : View(context) {
             }else{
                 color = storage.getPincelColor()
             }
-
-            // Smooths out edges of what is drawn without affecting shape.
-            isAntiAlias = true
-            // Dithering affects how colors with higher-precision than the device are down-sampled.
-            isDither = true
-            style = Paint.Style.STROKE // default: FILL
-            strokeJoin = Paint.Join.ROUND // default: MITER
-            strokeCap = Paint.Cap.ROUND // default: BUTT
-            strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
         }
     }
 
@@ -144,9 +133,15 @@ class MyCanvasView(context: Context) : View(context) {
 
     fun atualizaCorCanvas() {
         if (storage.getDefaultCanvasColor()){
-            extraCanvas.drawColor(backgroundColor)
+            setBackgroundColor( backgroundColor )
         }else{
-            extraCanvas.drawColor(storage.getCanvasColor())
+            setBackgroundColor( storage.getCanvasColor() )
+        }
+    }
+
+    fun atualizaPincelEspessura() {
+        paint.apply {
+            strokeWidth = storage.getPincelEspessura().toFloat()
         }
     }
 }

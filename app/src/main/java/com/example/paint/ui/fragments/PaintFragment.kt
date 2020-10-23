@@ -20,7 +20,7 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import kotlinx.android.synthetic.main.paint_fragment.*
 import yuku.ambilwarna.AmbilWarnaDialog
 
-class PaintFragment : Fragment(){
+class PaintFragment : Fragment() , OnColorChange{
 
     private lateinit var viewModel : PaintViewModel
     private var pincelColor = R.color.colorPaint
@@ -69,13 +69,13 @@ class PaintFragment : Fragment(){
     }
 
    override fun onStart() {
-        //viewModel.registerListener(this)
+        viewModel.registerListener(this)
         //viewModel.setPaintFragment(true)
         super.onStart()
     }
 
     override fun onDestroy() {
-        //viewModel.unregisterListener()
+        viewModel.unregisterListener()
         // viewModel.setPaintFragment(false)
         super.onDestroy()
     }
@@ -83,15 +83,15 @@ class PaintFragment : Fragment(){
     @Optional
     @OnClick(R.id.button_up)
     fun onClickbuttonUp(view: View){
-        palete_vertical.visibility = View.VISIBLE
-        button_up.visibility = View.GONE
+        palete_vertical?.visibility = View.VISIBLE
+        button_up?.visibility = View.GONE
     }
 
     @Optional
     @OnClick(R.id.button_down)
     fun onClickbuttonDown(view: View){
-        palete_vertical.visibility = View.GONE
-        button_up.visibility = View.VISIBLE
+        palete_vertical?.visibility = View.GONE
+        button_up?.visibility = View.VISIBLE
     }
 
     @Optional
@@ -119,7 +119,7 @@ class PaintFragment : Fragment(){
     }
 
     @Optional
-    @OnClick(R.id.textView_color_paint_canvas)
+    @OnClick(R.id.textView_color_paint_canvas_vertical)
     fun onClickTextViewColorPaintCanvas(view: View) {
         Log.i("cor muda", "openColorPicker")
         openColorPickerCanvas()
@@ -131,24 +131,26 @@ class PaintFragment : Fragment(){
                 canvasColor = color
 
                 viewModel.setCanvasColor(canvasColor)
-                canvasFragment.atualizaCorCanvas()
+                atualizaCanvas()
             }
         })
         colorPicker.show()
     }
 
-   /* override fun onColorChange(color: Int) {
-        Log.i("cor muda", "atualizarCor")
-        //if (viewModel.getPaintCriado()){
-            Log.i("cor muda if", "atualizarCorif")
-            canvasFragment.atualizaCorCanvas()
-        //}
-        Log.i("cor mudadepois", "atualizarCordepois")
-
-        //canvasFragment.atualizaCorCanvas()
-        //viewModel.changeColor(color)
+    fun atualizaCanvas(){
+        Log.i("atualiza cor canvas", " ")
+        canvasFragment.atualizaCorCanvas()
     }
-*/
+
+    fun atualizaPincelEspessura(){
+        canvasFragment.atualizaPincelEspessura()
+    }
+
+    override fun onColorChange(color: Int) {
+        Log.i("paintFragment", color.toString())
+        canvasFragment.atualizaCorCanvas()
+    }
+
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 //        inflater.inflate(R.menu.pincel_menu, menu);
