@@ -23,9 +23,6 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private  var mContext: Context? = null
     private  var mAttrs: AttributeSet? = null
 
-    //val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    //val canvas = Canvas(bitmap)
-
     private val storage = ListStorage.getInstance()
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
@@ -76,24 +73,7 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
-
-        //canvas.drawPath(path, paint) // draws the path with the paint
-        //canvas.drawPath(path, paint) // draws the path with the paint
-        //arrayPath.add(canvas.drawPath(path, paint)) // draws the path with the paint)
-
-//        for (p in arrayPath) {
-//            paint.color = p.Color
-//            paint.strokeWidth = p.Width
-//            canvas.drawPath(p.path, paint)
-//        }
-
     }
-
-//    override fun onDraw(canvas: Canvas) {
-//        super.onDraw(canvas)
-//        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
-//    }
-
 
     override fun performClick(): Boolean {
         return super.performClick()

@@ -20,7 +20,7 @@ class GestureListener() : SimpleOnGestureListener(), OnDoubleTapListener {
     ////////SimpleOnGestureListener
     override fun onLongPress(motionEvent: MotionEvent) {
         Log.i("Long Press", "Long Press")
-        Toast.makeText(this.canvas?.context,"Long Press", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.canvas?.context,"Long Press - mudar pincel color", Toast.LENGTH_SHORT).show()
 
         //TODO escolher o que fazer
 
@@ -29,7 +29,7 @@ class GestureListener() : SimpleOnGestureListener(), OnDoubleTapListener {
     /////////OnDoubleTapListener
     override fun onDoubleTap(motionEvent: MotionEvent): Boolean {
         Log.i("double tap", "double tap")
-        Toast.makeText(this.canvas?.context,"Double Click", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.canvas?.context,"Double Click - mudar background color", Toast.LENGTH_SHORT).show()
 
         //TODO mudar a cor do background para uma cor random
 

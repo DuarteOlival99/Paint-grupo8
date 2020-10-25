@@ -1,8 +1,7 @@
 package com.example.paint.ui.fragments
 
-import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Optional
 import com.example.paint.R
-import com.example.paint.ui.listeners.OnColorChange
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import yuku.ambilwarna.AmbilWarnaDialog
 
@@ -69,7 +67,7 @@ class PaleteFragment : Fragment() {
                     pincelColor = color
 
                     viewModel.setPincelColor(pincelColor)
-                    alteraCorPaint()
+                    alteraCorPincel()
                 }
             })
         colorPicker.show()
@@ -102,7 +100,7 @@ class PaleteFragment : Fragment() {
         fragment.atualizaCorCanvas()
     }
 
-    fun alteraCorPaint(){
+    fun alteraCorPincel(){
         val fragment = parentFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
         fragment.atualizaCorPicenl()
     }
@@ -112,38 +110,39 @@ class PaleteFragment : Fragment() {
         fragment.atualizaPincelEspessura()
     }
 
+    fun alteraCorPincelPalete(cor: Int){
+        viewModel.setPincelColor(cor)
+        alteraCorPincel()
+    }
+
     @OnClick(R.id.bola_preta)
     fun onClickCorPreta(view: View){
-        //TODO
+        alteraCorPincelPalete(Color.BLACK)
     }
 
     @OnClick(R.id.bola_cinzenta)
     fun onClickCorCinzenta(view: View){
-
+        alteraCorPincelPalete(Color.GRAY)
     }
 
     @OnClick(R.id.bola_amarela)
     fun onClickCorAmarela(view: View){
-
+        alteraCorPincelPalete(Color.YELLOW)
     }
 
     @OnClick(R.id.bola_vermelha)
     fun onClickCorVermelha(view: View){
-
+        alteraCorPincelPalete(Color.RED)
     }
 
     @OnClick(R.id.bola_verde)
     fun onClickCorVerde(view: View){
-
+        alteraCorPincelPalete(Color.GREEN)
     }
 
     @OnClick(R.id.bola_azul)
     fun onClickCorAzul(view: View){
-
+        alteraCorPincelPalete(Color.BLUE)
     }
 
-/*    override fun onColorChange(color: Int) {
-        Log.i("Palete", "palete")
-       //canvasFragment.atualizaCorCanvas()
-    }*/
 }
