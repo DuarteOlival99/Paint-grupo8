@@ -23,6 +23,9 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private  var mContext: Context? = null
     private  var mAttrs: AttributeSet? = null
 
+    //val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    //val canvas = Canvas(bitmap)
+
     private val storage = ListStorage.getInstance()
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
@@ -58,7 +61,9 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
         initPaint()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, mGestureDetector: GestureDetector?) : this(context) {
+    constructor(context: Context?, attrs: AttributeSet?, mGestureDetector: GestureDetector?) : this(
+        context
+    ) {
         this.mContext = context
         this.mAttrs = attrs
         //super(context, attrs)
@@ -69,7 +74,19 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawPath(path, paint) // draws the path with the paint
+        super.onDraw(canvas)
+        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+
+        //canvas.drawPath(path, paint) // draws the path with the paint
+        //canvas.drawPath(path, paint) // draws the path with the paint
+        //arrayPath.add(canvas.drawPath(path, paint)) // draws the path with the paint)
+
+//        for (p in arrayPath) {
+//            paint.color = p.Color
+//            paint.strokeWidth = p.Width
+//            canvas.drawPath(p.path, paint)
+//        }
+
     }
 
 //    override fun onDraw(canvas: Canvas) {
@@ -94,6 +111,7 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
             MotionEvent.ACTION_DOWN -> {
                 path.moveTo(eventX, eventY) // updates the path initial point
                 //touchStart()
+                //path.reset()
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
@@ -101,52 +119,12 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
                     eventX,
                     eventY
                 )
+                extraCanvas.drawPath(path, paint)
+                invalidate()
             } // makes a line to the point each time this event is fired
-            MotionEvent.ACTION_UP -> performClick()
-            else -> return false
+            MotionEvent.ACTION_UP -> path.reset()
         }
-
-//        when (event.action) {
-//            MotionEvent.ACTION_DOWN -> touchStart()
-//            MotionEvent.ACTION_MOVE -> touchMove()
-//            MotionEvent.ACTION_UP -> touchUp()
-//        }
-
-        // Schedules a repaint.
-        invalidate()
         return true
-    }
-
-    private fun touchMove() {
-        val dx = Math.abs(motionTouchEventX - currentX)
-        val dy = Math.abs(motionTouchEventY - currentY)
-        if (dx >= touchTolerance || dy >= touchTolerance) {
-            // QuadTo() adds a quadratic bezier from the last point,
-            // approaching control point (x1,y1), and ending at (x2,y2).
-            path.quadTo(
-                currentX,
-                currentY,
-                (motionTouchEventX + currentX) / 2,
-                (motionTouchEventY + currentY) / 2
-            )
-            currentX = motionTouchEventX
-            currentY = motionTouchEventY
-            // Draw the path in the extra bitmap to cache it.
-            extraCanvas.drawPath(path, paint)
-        }
-        invalidate()
-    }
-
-    private fun touchStart() {
-        path.reset()
-        path.moveTo(motionTouchEventX, motionTouchEventY)
-        currentX = motionTouchEventX
-        currentY = motionTouchEventY
-    }
-
-    private fun touchUp() {
-        // Reset the path so it doesn't get drawn again.
-        path.reset()
     }
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
