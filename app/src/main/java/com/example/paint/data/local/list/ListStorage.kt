@@ -16,6 +16,10 @@ class ListStorage private constructor() {
     private var paintCriado = false
     private var pincelEspessura = 12
 
+    private var drawCircle = false
+    private var drawTriangle = false
+    private var drawSquare = false
+
     companion object {
 
         private var instance: ListStorage? = null
@@ -94,6 +98,27 @@ class ListStorage private constructor() {
     fun setPincelEspessura(pincelEspessura : Int) {
         this.pincelEspessura = pincelEspessura
         paintPincelEspessuraDefault = false
+    }
+
+    fun getCircle(): Boolean{
+        return drawCircle
+    }
+    fun setCircle(b: Boolean) {
+        drawCircle = b
+    }
+
+    fun getTriangle(): Boolean{
+        return drawTriangle
+    }
+    fun setTriangle(b: Boolean) {
+        drawTriangle = b
+    }
+
+    fun getSquare(): Boolean{
+        return drawSquare
+    }
+    fun setSquare(b: Boolean) {
+        drawSquare = b
     }
 
 }

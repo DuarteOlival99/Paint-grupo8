@@ -49,4 +49,16 @@ class PaintLogic() {
         storage.setPincelEspessura(pincelEspessura)
     }
 
+    fun setCircle(b: Boolean) {
+        storage.setCircle(b)
+    }
+
+    fun setTriangle(b: Boolean) {
+        storage.setTriangle(b)
+    }
+
+    fun setSquare(b: Boolean) {
+        storage.setSquare(b)
+    }
+
 }

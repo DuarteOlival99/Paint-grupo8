@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import butterknife.OnClick
 import com.example.paint.R
 import com.example.paint.ui.listeners.GestureListener
 import com.example.paint.ui.utils.MyCanvasView

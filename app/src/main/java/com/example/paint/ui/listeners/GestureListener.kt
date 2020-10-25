@@ -11,6 +11,7 @@ import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
 import com.example.paint.ui.fragments.CanvasFragment
 import com.example.paint.ui.utils.MyCanvasView
+import kotlinx.android.synthetic.main.activity_paint.view.*
 import java.util.*
 
 
@@ -22,6 +23,25 @@ class GestureListener() : SimpleOnGestureListener(), OnDoubleTapListener {
 
     fun setCanvas(canvas: MyCanvasView?) {
         this.canvas = canvas
+    }
+
+    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+        Log.i("oneTap", "OneTap")
+        when {
+            storage.getCircle() -> {
+                //Toast.makeText(this.canvas?.context, "Circulo", Toast.LENGTH_SHORT).show()
+                Log.i("Circle", "Circle")
+                //canvas?.drawCircle()
+            }
+            storage.getSquare() -> {
+                //Toast.makeText(this.canvas?.context, "Quadrado", Toast.LENGTH_SHORT).show()
+            }
+            storage.getTriangle() -> {
+                //Toast.makeText(this.canvas?.context, "Triangulo", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return super.onSingleTapConfirmed(e)
     }
 
     //SimpleOnGestureListener

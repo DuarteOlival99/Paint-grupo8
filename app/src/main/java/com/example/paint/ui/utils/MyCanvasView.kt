@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.FragmentManager
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
 import java.util.*
@@ -24,7 +23,6 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private  var mContext: Context? = null
     private  var mAttrs: AttributeSet? = null
 
-
     private val storage = ListStorage.getInstance()
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
@@ -37,6 +35,8 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
 
     private var currentX = 0f
     private var currentY = 0f
+
+
 
     private val touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
@@ -63,7 +63,25 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+        if (storage.getCircle() || storage.getTriangle() || storage.getSquare()){
+            when {
+                storage.getCircle() -> {
+                    drawCircle(canvas)
+                    Log.i("MCircle", "MCircle")
+                }
+                storage.getSquare() -> {
+                    drawSquare(canvas)
+                    Log.i("MSquare", "MSquare")
+                }
+                storage.getTriangle() -> {
+                    drawTriangle(currentX, currentY,canvas)
+                    Log.i("MTriangle", "MTriangle")
+
+                }
+            }
+        } else{
+            canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+        }
     }
 
     override fun performClick(): Boolean {
@@ -72,12 +90,15 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         mGestureDetector!!.onTouchEvent(event)
+
         return false // let the event go to the rest of the listeners
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val eventX = event.x
         val eventY = event.y
+        currentX = eventX
+        currentY = eventY
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 path.moveTo(eventX, eventY) // updates the path initial point
@@ -95,6 +116,7 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
             } // makes a line to the point each time this event is fired
             MotionEvent.ACTION_UP -> path.reset()
         }
+        Log.i("TEVEB", "TEVENT")
         return true
     }
 
@@ -174,4 +196,33 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
         }
     }
 
+    fun drawCircle(canvas: Canvas){
+        Log.i("DCircle", "DCircle1")
+        canvas.drawCircle(currentX, currentY, 70F, paint)
+        Log.i("DCircle2", "DCircle2")
+    }
+
+    fun drawSquare(canvas: Canvas){
+        val RADIUS = 70
+        val square: Rect = Rect(
+            ((currentX - ((0.8) * RADIUS)).toInt()),
+            ((currentY - ((0.6) * RADIUS)).toInt()),
+            ((currentX + ((0.8) * RADIUS)).toInt()),
+            ((currentY + ((0.6 * RADIUS))).toInt())
+        )
+        canvas.drawRect(square, paint);
+
+    }
+
+    fun drawTriangle(x: Float, y: Float, canvas: Canvas) {
+        val width = 140
+        val halfWidth = width / 2
+        val path = Path()
+        path.moveTo(x.toFloat(), (y - halfWidth).toFloat()) // Top
+        path.lineTo((x - halfWidth).toFloat(), (y + halfWidth).toFloat()) // Bottom left
+        path.lineTo((x + halfWidth).toFloat(), (y + halfWidth).toFloat()) // Bottom right
+        path.lineTo(x.toFloat(), (y - halfWidth).toFloat()) // Back to Top
+        path.close()
+        canvas.drawPath(path, paint)
+    }
 }

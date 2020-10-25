@@ -2,6 +2,7 @@ package com.example.paint.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -144,5 +145,30 @@ class PaleteFragment : Fragment() {
     fun onClickCorAzul(view: View){
         alteraCorPincelPalete(Color.BLUE)
     }
+
+    //Formas
+    @OnClick(R.id.circulo)
+    fun onClickCircle(view: View){
+        Log.i("onClickCircle", "onClickCircle")
+        viewModel.setCircle(true)
+        viewModel.setTriangle(false)
+        viewModel.setSquare(false)
+    }
+
+    @OnClick(R.id.triangulo)
+    fun onClickTriangle(view: View){
+        viewModel.setCircle(false)
+        viewModel.setTriangle(true)
+        viewModel.setSquare(false)
+
+    }
+
+    @OnClick(R.id.quadrado)
+    fun onClickSquare(view: View){
+        viewModel.setCircle(false)
+        viewModel.setTriangle(false)
+        viewModel.setSquare(true)
+    }
+
 
 }

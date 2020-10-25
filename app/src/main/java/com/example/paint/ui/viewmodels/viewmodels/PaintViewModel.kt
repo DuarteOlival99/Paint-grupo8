@@ -54,4 +54,16 @@ class PaintViewModel (application: Application ) : AndroidViewModel (application
     fun setPincelEspessura(pincelEspessura: Int) {
         paintLogic.setPincelEspessura(pincelEspessura)
     }
+
+    fun setCircle(b: Boolean) {
+        paintLogic.setCircle(b)
+    }
+
+    fun setTriangle(b: Boolean) {
+        paintLogic.setTriangle(b)
+    }
+
+    fun setSquare(b: Boolean) {
+        paintLogic.setSquare(b)
+    }
 }
