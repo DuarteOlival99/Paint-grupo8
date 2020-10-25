@@ -94,6 +94,7 @@ class ListStorage private constructor() {
 
     fun setPincelEspessura(pincelEspessura : Int) {
         this.pincelEspessura = pincelEspessura
+        paintPincelEspessuraDefault = false
     }
 
 }

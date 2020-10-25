@@ -2,7 +2,9 @@ package com.example.paint.ui.utils
 
 import android.content.Context
 import android.graphics.*
+import android.util.AttributeSet
 import android.util.Log
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -32,7 +34,6 @@ class MyCanvasView(context: Context) : View(context) {
     private val touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
     private lateinit var frame: Rect
-
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         motionTouchEventX = event.x
@@ -94,6 +95,7 @@ class MyCanvasView(context: Context) : View(context) {
         style = Paint.Style.STROKE // default: FILL
         strokeJoin = Paint.Join.ROUND // default: MITER
         strokeCap = Paint.Cap.ROUND // default: BUTT
+        Log.i("pincelEspessura", storage.getPincelEspessura().toString())
         if (storage.getDefaultPincelEspessuraColor()){
             strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
         }else{
@@ -138,9 +140,9 @@ class MyCanvasView(context: Context) : View(context) {
 
     fun atualizaCorCanvas() {
         if (storage.getDefaultCanvasColor()){
-            setBackgroundColor( backgroundColor )
+            setBackgroundColor(backgroundColor)
         }else{
-            setBackgroundColor( storage.getCanvasColor() )
+            setBackgroundColor(storage.getCanvasColor())
         }
     }
 
