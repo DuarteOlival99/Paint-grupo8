@@ -12,11 +12,4 @@ class SplashScreenViewModel (application: Application ) : AndroidViewModel (appl
     fun setBackgroundColor(mDefaultColor: Int) {
         splashScreenLogic.setBackgroundColor(mDefaultColor)
     }
-
-    fun getBackgroundColor(): Int? {
-        return splashScreenLogic.getBackgroundColor()
-    }
-
-
-
 }

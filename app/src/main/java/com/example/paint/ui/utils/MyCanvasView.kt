@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentManager
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
 import java.util.*
@@ -22,6 +23,7 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private var mGestureDetector: GestureDetector? = null
     private  var mContext: Context? = null
     private  var mAttrs: AttributeSet? = null
+
 
     private val storage = ListStorage.getInstance()
     private lateinit var extraCanvas: Canvas
@@ -58,17 +60,6 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
         initPaint()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, mGestureDetector: GestureDetector?) : this(
-        context
-    ) {
-        this.mContext = context
-        this.mAttrs = attrs
-        //super(context, attrs)
-        this.mGestureDetector = mGestureDetector
-        setOnTouchListener(this)
-        setBackgroundColor(backGroundColor)
-        initPaint()
-    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

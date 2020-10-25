@@ -1,6 +1,7 @@
 package com.example.paint.data.local.list
 
 import android.util.Log
+import androidx.fragment.app.FragmentManager
 import com.example.paint.R
 
 class ListStorage private constructor() {
@@ -14,8 +15,6 @@ class ListStorage private constructor() {
     private var canvasCriado = false
     private var paintCriado = false
     private var pincelEspessura = 12
-
-
 
     companion object {
 

@@ -9,10 +9,4 @@ class SplashScreenLogic() {
     fun setBackgroundColor(mDefaultColor: Int) {
         storage.setBackgroundColor(mDefaultColor)
     }
-
-    fun getBackgroundColor(): Int? {
-        return storage.getBackgroundColor()
-    }
-
-
 }
