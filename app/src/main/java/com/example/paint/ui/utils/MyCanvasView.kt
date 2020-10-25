@@ -4,25 +4,31 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
-import android.view.*
-import android.widget.Toast
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
+import java.util.*
 
 
 private const val STROKE_WIDTH = 12f // has to be floats
 
-class MyCanvasView(context: Context?, gestureDetector: GestureDetector) : View(context) , View.OnTouchListener {
-
+class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
+    private val paint = Paint()
+    private val path = Path()
+    private var mGestureDetector: GestureDetector? = null
+    private  var mContext: Context? = null
+    private  var mAttrs: AttributeSet? = null
 
     private val storage = ListStorage.getInstance()
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
-    private val backgroundColor = ResourcesCompat.getColor(resources, R.color.colorBackground, null)
+    private var backGroundColor = ResourcesCompat.getColor(resources, R.color.colorBackground, null)
     private var drawColor = ResourcesCompat.getColor(resources, R.color.colorPaint, null)
     //private var drawColor = storage.getPincelColor()
-    private var path = Path()
 
     private var motionTouchEventX = 0f
     private var motionTouchEventY = 0f
@@ -34,23 +40,80 @@ class MyCanvasView(context: Context?, gestureDetector: GestureDetector) : View(c
 
     private lateinit var frame: Rect
 
-    private var listener : GestureDetector
-
-    init {
-        listener = gestureDetector
+    constructor(context: Context?, attrs: AttributeSet?)  : this(context){
+        //this.mContext = context
+        this.mAttrs = attrs
+        //super(context, attrs)
         setOnTouchListener(this)
+        setBackgroundColor(backGroundColor)
+        initPaint()
     }
 
+    constructor(context: Context?, mGestureDetector: GestureDetector)  : this(context){
+        //this.mContext = context
+        //super(context, attrs)
+        this.mGestureDetector = mGestureDetector
+        setOnTouchListener(this)
+        setBackgroundColor(backGroundColor)
+        initPaint()
+    }
+
+    constructor(context: Context?, attrs: AttributeSet?, mGestureDetector: GestureDetector?) : this(context) {
+        this.mContext = context
+        this.mAttrs = attrs
+        //super(context, attrs)
+        this.mGestureDetector = mGestureDetector
+        setOnTouchListener(this)
+        setBackgroundColor(backGroundColor)
+        initPaint()
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawPath(path, paint) // draws the path with the paint
+    }
+
+//    override fun onDraw(canvas: Canvas) {
+//        super.onDraw(canvas)
+//        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+//    }
+
+
+    override fun performClick(): Boolean {
+        return super.performClick()
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        mGestureDetector!!.onTouchEvent(event)
+        return false // let the event go to the rest of the listeners
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        motionTouchEventX = event.x
-        motionTouchEventY = event.y
-
+        val eventX = event.x
+        val eventY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> touchStart()
-            MotionEvent.ACTION_MOVE -> touchMove()
-            MotionEvent.ACTION_UP -> touchUp()
+            MotionEvent.ACTION_DOWN -> {
+                path.moveTo(eventX, eventY) // updates the path initial point
+                //touchStart()
+                return true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                path.lineTo(
+                    eventX,
+                    eventY
+                )
+            } // makes a line to the point each time this event is fired
+            MotionEvent.ACTION_UP -> performClick()
+            else -> return false
         }
+
+//        when (event.action) {
+//            MotionEvent.ACTION_DOWN -> touchStart()
+//            MotionEvent.ACTION_MOVE -> touchMove()
+//            MotionEvent.ACTION_UP -> touchUp()
+//        }
+
+        // Schedules a repaint.
+        invalidate()
         return true
     }
 
@@ -86,41 +149,6 @@ class MyCanvasView(context: Context?, gestureDetector: GestureDetector) : View(c
         path.reset()
     }
 
-    // Set up the paint with which to draw.
-    private val paint = Paint().apply {
-        Log.i("pincel color", storage.getPincelColor().toString())
-        if (storage.getDefaultPincelColor()){
-            color = drawColor
-        }else{
-            color = storage.getPincelColor()
-        }
-
-        // Smooths out edges of what is drawn without affecting shape.
-        isAntiAlias = true
-        // Dithering affects how colors with higher-precision than the device are down-sampled.
-        isDither = true
-        style = Paint.Style.STROKE // default: FILL
-        strokeJoin = Paint.Join.ROUND // default: MITER
-        strokeCap = Paint.Cap.ROUND // default: BUTT
-        if (storage.getDefaultPincelEspessuraColor()){
-            strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
-        }else{
-            strokeWidth = storage.getPincelEspessura().toFloat()
-        }
-
-    }
-
-    fun atualizaCorPicenl() {
-        paint.apply {
-            Log.i("pincel color", storage.getPincelColor().toString())
-            if (storage.getDefaultPincelColor()){
-                color = drawColor
-            }else{
-                color = storage.getPincelColor()
-            }
-        }
-    }
-
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
 
@@ -136,19 +164,58 @@ class MyCanvasView(context: Context?, gestureDetector: GestureDetector) : View(c
         frame = Rect(inset, inset, width - inset, height - inset)
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+    fun changeBackground() {
+        val r = Random()
+        backGroundColor = Color.rgb(r.nextInt(256), r.nextInt(256), r.nextInt(256))
+        setBackgroundColor(backGroundColor)
+    }
 
-        // Draw a frame around the canvas.
-        //canvas.drawRect(frame, paint)
+    fun erase() {
+        paint.color = backGroundColor
+    }
+
+    private fun initPaint() {
+        paint.apply {
+            Log.i("pincel color", storage.getPincelColor().toString())
+            if (storage.getDefaultPincelColor()){
+                color = drawColor
+            }else{
+                color = storage.getPincelColor()
+            }
+
+            // Smooths out edges of what is drawn without affecting shape.
+            isAntiAlias = true
+            // Dithering affects how colors with higher-precision than the device are down-sampled.
+            isDither = true
+            style = Paint.Style.STROKE // default: FILL
+            strokeJoin = Paint.Join.ROUND // default: MITER
+            strokeCap = Paint.Cap.ROUND // default: BUTT
+            if (storage.getDefaultPincelEspessuraColor()){
+                strokeWidth = STROKE_WIDTH // default: Hairline-width (really thin)
+            }else{
+                strokeWidth = storage.getPincelEspessura().toFloat()
+            }
+
+        }
+
+    }
+
+    fun atualizaCorPicenl() {
+        paint.apply {
+            Log.i("pincel color", storage.getPincelColor().toString())
+            if (storage.getDefaultPincelColor()){
+                color = drawColor
+            }else{
+                color = storage.getPincelColor()
+            }
+        }
     }
 
     fun atualizaCorCanvas() {
         if (storage.getDefaultCanvasColor()){
-            setBackgroundColor( backgroundColor )
+            setBackgroundColor(backGroundColor)
         }else{
-            setBackgroundColor( storage.getCanvasColor() )
+            setBackgroundColor(storage.getCanvasColor())
         }
     }
 
@@ -156,12 +223,6 @@ class MyCanvasView(context: Context?, gestureDetector: GestureDetector) : View(c
         paint.apply {
             strokeWidth = storage.getPincelEspessura().toFloat()
         }
-    }
-
-
-    override fun onTouch(view: View?, event: MotionEvent?): Boolean {
-        listener.onTouchEvent(event)
-        return true   //indica se evento foi manipulado com sucesso
     }
 
 }

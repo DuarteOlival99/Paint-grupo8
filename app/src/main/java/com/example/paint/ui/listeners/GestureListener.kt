@@ -1,6 +1,5 @@
 package com.example.paint.ui.listeners
 
-import android.content.Context
 import android.util.Log
 import android.view.GestureDetector.OnDoubleTapListener
 import android.view.GestureDetector.SimpleOnGestureListener

@@ -1,12 +1,14 @@
 package com.example.paint.ui.fragments
 
-import android.app.Activity
+import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnLongClickListener
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,10 +17,10 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Optional
 import com.example.paint.R
-import com.example.paint.ui.listeners.OnColorChange
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import kotlinx.android.synthetic.main.paint_fragment.*
 import yuku.ambilwarna.AmbilWarnaDialog
+
 
 class PaintFragment : Fragment(){
 
@@ -37,6 +39,7 @@ class PaintFragment : Fragment(){
         val view = inflater.inflate(R.layout.paint_fragment, container, false)
         viewModel = ViewModelProviders.of(this).get(PaintViewModel::class.java)
         ButterKnife.bind(this, view)
+
         return view
     }
 
@@ -93,7 +96,10 @@ class PaintFragment : Fragment(){
     @Optional
     @OnClick(R.id.textView_brush_paint)
     fun onClickTextViewBrushPaint(view: View){
-        fragmentManager?.let { PincelChangeDialogFragment().show(childFragmentManager, "pincel change") }
+        fragmentManager?.let { PincelChangeDialogFragment().show(
+            childFragmentManager,
+            "pincel change"
+        ) }
     }
 
     @Optional
@@ -102,15 +108,18 @@ class PaintFragment : Fragment(){
         openColorPickerPincel()
     }
     private fun openColorPickerPincel() {
-        val colorPicker = AmbilWarnaDialog(context, pincelColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
-            override fun onCancel(dialog: AmbilWarnaDialog) {}
-            override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
-                pincelColor = color
+        val colorPicker = AmbilWarnaDialog(
+            context,
+            pincelColor,
+            object : AmbilWarnaDialog.OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog) {}
+                override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
+                    pincelColor = color
 
-                viewModel.setPincelColor(pincelColor)
-                canvasFragment.atualizaCorPicenl()
-            }
-        })
+                    viewModel.setPincelColor(pincelColor)
+                    canvasFragment.atualizaCorPicenl()
+                }
+            })
         colorPicker.show()
     }
 
@@ -121,15 +130,18 @@ class PaintFragment : Fragment(){
         openColorPickerCanvas()
     }
     private fun openColorPickerCanvas() {
-        val colorPicker = AmbilWarnaDialog(context, canvasColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
-            override fun onCancel(dialog: AmbilWarnaDialog) {}
-            override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
-                canvasColor = color
+        val colorPicker = AmbilWarnaDialog(
+            context,
+            canvasColor,
+            object : AmbilWarnaDialog.OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog) {}
+                override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
+                    canvasColor = color
 
-                viewModel.setCanvasColor(canvasColor)
-                atualizaCanvas()
-            }
-        })
+                    viewModel.setCanvasColor(canvasColor)
+                    atualizaCanvas()
+                }
+            })
         colorPicker.show()
     }
 
