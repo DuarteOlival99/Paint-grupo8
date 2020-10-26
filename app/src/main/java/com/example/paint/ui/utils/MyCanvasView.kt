@@ -8,7 +8,9 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.MotionEventCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
 import java.util.*
@@ -16,7 +18,7 @@ import java.util.*
 
 private const val STROKE_WIDTH = 12f // has to be floats
 
-class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
+open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private val paint = Paint()
     private val path = Path()
     private var mGestureDetector: GestureDetector? = null
@@ -35,6 +37,10 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
 
     private var currentX = 0f
     private var currentY = 0f
+
+    private var actionUp = false
+    private var actionDown = false
+    private var actionMove = false
 
     private val touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
@@ -61,25 +67,7 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (storage.getCircle() || storage.getTriangle() || storage.getSquare()){
-            when {
-                storage.getCircle() -> {
-                    drawCircle(canvas)
-                    Log.i("MCircle", "MCircle")
-                }
-                storage.getSquare() -> {
-                    drawSquare(canvas)
-                    Log.i("MSquare", "MSquare")
-                }
-                storage.getTriangle() -> {
-                    drawTriangle(currentX, currentY,canvas)
-                    Log.i("MTriangle", "MTriangle")
-
-                }
-            }
-        } else{
-            canvas.drawBitmap(extraBitmap, 0f, 0f, null)
-        }
+        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
     }
 
     override fun performClick(): Boolean {
@@ -88,9 +76,9 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         mGestureDetector!!.onTouchEvent(event)
-
         return false // let the event go to the rest of the listeners
     }
+
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val eventX = event.x
@@ -99,22 +87,70 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
         currentY = eventY
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                actionDown = true
+                Log.i("ACTION_DOWN", "ACTION_DOWN")
                 path.moveTo(eventX, eventY) // updates the path initial point
                 //touchStart()
                 //path.reset()
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(
-                    eventX,
-                    eventY
-                )
-                extraCanvas.drawPath(path, paint)
+                actionMove = true
+                Log.i("ACTION_MOVE", "ACTION_MOVE")
+                if (storage.getCircle() || storage.getTriangle() || storage.getSquare()){
+                    when {
+                        storage.getCircle() -> {
+                            drawCircle(extraCanvas)
+                            Log.i("MCircle", "MCircle")
+                        }
+                        storage.getSquare() -> {
+                            drawSquare(extraCanvas)
+                            Log.i("MSquare", "MSquare")
+                        }
+                        storage.getTriangle() -> {
+                            drawTriangle(currentX, currentY, extraCanvas)
+                            Log.i("MTriangle", "MTriangle")
+
+                        }
+                    }
+                } else{
+                    path.lineTo(
+                        eventX,
+                        eventY
+                    )
+                    extraCanvas.drawPath(path, paint)
+                }
                 invalidate()
             } // makes a line to the point each time this event is fired
-            MotionEvent.ACTION_UP -> path.reset()
+            MotionEvent.ACTION_UP ->{
+                actionUp =  true
+                Log.i("ACTION_UP", "ACTION_UP")
+                if ((actionDown && actionUp ) && !actionMove){
+                    if (storage.getCircle() || storage.getTriangle() || storage.getSquare()){
+                        when {
+                            storage.getCircle() -> {
+                                drawCircle(extraCanvas)
+                                Log.i("MCircle", "MCircle")
+                            }
+                            storage.getSquare() -> {
+                                drawSquare(extraCanvas)
+                                Log.i("MSquare", "MSquare")
+                            }
+                            storage.getTriangle() -> {
+                                drawTriangle(currentX, currentY, extraCanvas)
+                                Log.i("MTriangle", "MTriangle")
+
+                            }
+                        }
+                    }
+                }
+                invalidate()
+                path.reset()
+            }
         }
-        Log.i("TEVEB", "TEVENT")
+        actionDown = false
+        actionMove = false
+        actionUp =  false
         return true
     }
 
