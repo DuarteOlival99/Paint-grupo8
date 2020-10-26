@@ -36,8 +36,6 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private var currentX = 0f
     private var currentY = 0f
 
-
-
     private val touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
     private lateinit var frame: Rect
@@ -210,7 +208,8 @@ class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
             ((currentX + ((0.8) * RADIUS)).toInt()),
             ((currentY + ((0.6 * RADIUS))).toInt())
         )
-        canvas.drawRect(square, paint);
+       //canvas.drawBitmap(extraBitmap,square,square,paint )
+       canvas.drawRect(square, paint);
 
     }
 
