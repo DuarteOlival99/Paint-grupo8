@@ -1,12 +1,15 @@
 package com.example.paint.ui.fragments
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
@@ -20,6 +23,8 @@ import kotlin.math.log
 class AboutFragment : Fragment() {
 
     private lateinit var viewModel : AboutViewModel
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,24 @@ class AboutFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         about.setBackgroundColor(viewModel.getBackgroundColor()!!)
+        val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        val batteryStatus = context!!.registerReceiver(null, iFilter)
+        val level = batteryStatus?.getIntExtra(
+            BatteryManager.EXTRA_LEVEL,
+            -1
+        ) ?: -1
+        val scale = batteryStatus?.getIntExtra(
+            BatteryManager.EXTRA_SCALE,
+            -1
+        ) ?: -1
+        val batteryPct = level / scale.toDouble()
+        val batLevel = (batteryPct * 100).toInt()
+
+        /*if (batLevel <= 20){
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+        }*/
     }
 
     @OnClick(R.id.iconLinkedin_bruna)
