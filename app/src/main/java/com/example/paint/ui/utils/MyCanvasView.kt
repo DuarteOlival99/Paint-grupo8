@@ -228,13 +228,13 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
         }
     }
 
-    fun drawCircle(canvas: Canvas){
+    private fun drawCircle(canvas: Canvas){
         Log.i("DCircle", "DCircle1")
         canvas.drawCircle(currentX, currentY, 70F, paint)
         Log.i("DCircle2", "DCircle2")
     }
 
-    fun drawSquare(canvas: Canvas){
+    private fun drawSquare(canvas: Canvas){
         val RADIUS = 70
         val square: Rect = Rect(
             ((currentX - ((0.8) * RADIUS)).toInt()),
@@ -247,7 +247,7 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
 
     }
 
-    fun drawTriangle(x: Float, y: Float, canvas: Canvas) {
+    private fun drawTriangle(x: Float, y: Float, canvas: Canvas) {
         val width = 140
         val halfWidth = width / 2
         val path = Path()
@@ -263,4 +263,6 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
         extraCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
         invalidate()
     }
+
+
 }

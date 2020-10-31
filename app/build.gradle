@@ -62,6 +62,8 @@ dependencies {
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
     //fancy buttons
     implementation 'com.github.medyo:fancybuttons:1.9.1'
+    //dark mode
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
 
 
 }

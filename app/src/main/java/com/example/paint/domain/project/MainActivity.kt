@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.paint.R
 import com.example.paint.data.sensors.shake.ShakeDetector
+import com.example.paint.ui.fragments.CanvasFragment
 import com.example.paint.ui.utils.NavigationManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -69,7 +70,9 @@ class MainActivity : AppCompatActivity(),
         val id = item.itemId;
         when(item.itemId) {
             R.id.pincel_menu -> {
-                Toast.makeText(this, "Tapped on icon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Clean screen", Toast.LENGTH_SHORT).show();
+                val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+                fragment.cleanScreen()
             }
         }
 
@@ -102,12 +105,6 @@ class MainActivity : AppCompatActivity(),
                     ).show()
                     startActivityForResult(intent, 200)
                 }
-            } else {
-                Toast.makeText(
-                    applicationContext,
-                    "You are not allowed to wright ",
-                    Toast.LENGTH_LONG
-                ).show()
             }
         }
 

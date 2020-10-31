@@ -1,8 +1,7 @@
 package com.example.paint.ui.fragments
 
 import android.content.Context
-import android.content.Context.SENSOR_SERVICE
-import android.graphics.Color
+import android.graphics.BitmapFactory
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -15,8 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.paint.R
@@ -24,8 +21,6 @@ import com.example.paint.data.sensors.shake.ShakeDetector
 import com.example.paint.ui.listeners.GestureListener
 import com.example.paint.ui.utils.MyCanvasView
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
-import kotlin.math.max
-import kotlin.properties.Delegates
 
 
 class CanvasFragment : Fragment(){
@@ -48,6 +43,14 @@ class CanvasFragment : Fragment(){
         initSensor()
         sensorManager = context!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         lightSensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_LIGHT);
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -80,18 +83,19 @@ class CanvasFragment : Fragment(){
         lightEventListener = object : SensorEventListener {
             override fun onSensorChanged(sensorEvent: SensorEvent) {
                 val value = sensorEvent.values[0]
-                (activity as AppCompatActivity).supportActionBar!!.title = "Luminosity : $value lx"
 
                 val percentagemLuz = (value * 100) / maxValue
                 if (percentagemLuz < 20){
                     val brightness = (100 - percentagemLuz).toInt()
                     Log.i("teste", brightness.toString())
                     if (brightness >= 99){
-                        Settings.System.putInt(context!!.contentResolver, Settings.System.SCREEN_BRIGHTNESS,
+                        Settings.System.putInt(
+                            context!!.contentResolver, Settings.System.SCREEN_BRIGHTNESS,
                             255
                         )
                     }else{
-                        Settings.System.putInt(context!!.contentResolver, Settings.System.SCREEN_BRIGHTNESS,
+                        Settings.System.putInt(
+                            context!!.contentResolver, Settings.System.SCREEN_BRIGHTNESS,
                             brightness.toInt()
                         )
                     }
@@ -125,6 +129,9 @@ class CanvasFragment : Fragment(){
         canvasView.atualizaPincelEspessura()
     }
 
+    fun cleanScreen() {
+        canvasView.cleanScreen()
+    }
 
 
 
@@ -136,7 +143,11 @@ class CanvasFragment : Fragment(){
             mAccelerometer,
             SensorManager.SENSOR_DELAY_UI
         )
-        sensorManager!!.registerListener(lightEventListener, lightSensor, SensorManager.SENSOR_DELAY_FASTEST)
+        sensorManager!!.registerListener(
+            lightEventListener,
+            lightSensor,
+            SensorManager.SENSOR_DELAY_FASTEST
+        )
     }
 
     override fun onPause() { // Add the following line to unregister the Sensor Manager onPause
