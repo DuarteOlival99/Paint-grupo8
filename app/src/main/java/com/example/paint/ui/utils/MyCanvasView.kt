@@ -8,9 +8,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.MotionEventCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
 import java.util.*
@@ -97,7 +95,7 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
             MotionEvent.ACTION_MOVE -> {
                 actionMove = true
                 Log.i("ACTION_MOVE", "ACTION_MOVE")
-                if (storage.getCircle() || storage.getTriangle() || storage.getSquare()){
+                if (storage.getCircle() || storage.getTriangle() || storage.getSquare()) {
                     when {
                         storage.getCircle() -> {
                             drawCircle(extraCanvas)
@@ -113,7 +111,7 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
 
                         }
                     }
-                } else{
+                } else {
                     path.lineTo(
                         eventX,
                         eventY
@@ -122,11 +120,11 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
                 }
                 invalidate()
             } // makes a line to the point each time this event is fired
-            MotionEvent.ACTION_UP ->{
-                actionUp =  true
+            MotionEvent.ACTION_UP -> {
+                actionUp = true
                 Log.i("ACTION_UP", "ACTION_UP")
-                if ((actionDown && actionUp ) && !actionMove){
-                    if (storage.getCircle() || storage.getTriangle() || storage.getSquare()){
+                if ((actionDown && actionUp) && !actionMove) {
+                    if (storage.getCircle() || storage.getTriangle() || storage.getSquare()) {
                         when {
                             storage.getCircle() -> {
                                 drawCircle(extraCanvas)
@@ -259,5 +257,10 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
         path.lineTo(x.toFloat(), (y - halfWidth).toFloat()) // Back to Top
         path.close()
         canvas.drawPath(path, paint)
+    }
+
+    fun cleanScreen() {
+        extraCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
+        invalidate()
     }
 }

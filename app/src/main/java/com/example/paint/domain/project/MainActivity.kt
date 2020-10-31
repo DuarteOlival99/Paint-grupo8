@@ -1,6 +1,8 @@
 package com.example.paint.domain.project
 
 import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,12 +12,20 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.paint.R
+import com.example.paint.ui.listeners.ShakeDetector
 import com.example.paint.ui.utils.NavigationManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
+
+
+    // The following are used for the shake detection
+    private var mSensorManager: SensorManager? = null
+    private var mAccelerometer: Sensor? = null
+    private var mShakeDetector: ShakeDetector? = null
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setupDrawerMenu()
@@ -70,6 +80,7 @@ class MainActivity : AppCompatActivity(),
         )
         setSupportActionBar(toolbar)
         setupDrawerMenu()
+        initSensor()
 
         if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToPaint(
@@ -109,6 +120,51 @@ class MainActivity : AppCompatActivity(),
             finish()
         }
         super.onBackPressed()
+    }
+
+
+
+
+    override fun onResume() {
+        super.onResume()
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager!!.registerListener(
+            mShakeDetector,
+            mAccelerometer,
+            SensorManager.SENSOR_DELAY_UI
+        )
+    }
+
+    override fun onPause() { // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager!!.unregisterListener(mShakeDetector)
+        super.onPause()
+    }
+
+    private fun initSensor() {
+        // ShakeDetector initialization
+        // ShakeDetector initialization
+        mSensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        mShakeDetector = ShakeDetector()
+        mShakeDetector!!.setOnShakeListener(object : ShakeDetector.OnShakeListener {
+            override fun onShake(count: Int) { /*
+                 * The following method, "handleShakeEvent(count):" is a stub //
+                 * method you would use to setup whatever you want done once the
+                 * device has been shook.
+                 */
+                //Toast.makeText(this@MainActivity, count.toString(), Toast.LENGTH_SHORT).show()
+
+                /*
+                title = getText(R.string.paint).toString()
+//                val intent = Intent(this, PaintActivity::class.java).apply {}
+//                startActivity(intent)
+                NavigationManager.goToPaint(
+                    supportFragmentManager
+                )
+                */
+
+            }
+        })
     }
 
 

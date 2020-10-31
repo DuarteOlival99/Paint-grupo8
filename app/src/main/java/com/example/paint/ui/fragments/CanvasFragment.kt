@@ -1,15 +1,22 @@
 package com.example.paint.ui.fragments
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import butterknife.OnClick
 import com.example.paint.R
 import com.example.paint.ui.listeners.GestureListener
+import com.example.paint.ui.listeners.ShakeDetector
 import com.example.paint.ui.utils.MyCanvasView
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 
@@ -19,9 +26,14 @@ class CanvasFragment : Fragment(){
     private lateinit var viewModel : PaintViewModel
     private lateinit var canvasView: MyCanvasView
     private lateinit var gd : GestureDetector
+    // The following are used for the shake detection
+    private var mSensorManager: SensorManager? = null
+    private var mAccelerometer: Sensor? = null
+    private var mShakeDetector: ShakeDetector? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initSensor()
     }
 
     override fun onCreateView(
@@ -64,6 +76,42 @@ class CanvasFragment : Fragment(){
 
     fun atualizaPincelEspessura() {
         canvasView.atualizaPincelEspessura()
+    }
+
+
+
+
+    override fun onResume() {
+        super.onResume()
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager!!.registerListener(
+            mShakeDetector,
+            mAccelerometer,
+            SensorManager.SENSOR_DELAY_UI
+        )
+    }
+
+    override fun onPause() { // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager!!.unregisterListener(mShakeDetector)
+        super.onPause()
+    }
+
+    private fun initSensor() {
+        // ShakeDetector initialization
+        // ShakeDetector initialization
+        mSensorManager = context!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager?
+        mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        mShakeDetector = ShakeDetector()
+        mShakeDetector!!.setOnShakeListener(object : ShakeDetector.OnShakeListener {
+            override fun onShake(count: Int) { /*
+                 * The following method, "handleShakeEvent(count):" is a stub //
+                 * method you would use to setup whatever you want done once the
+                 * device has been shook.
+                 */
+                Toast.makeText(context, count.toString(), Toast.LENGTH_SHORT).show()
+                canvasView.cleanScreen()
+            }
+        })
     }
 
 }
