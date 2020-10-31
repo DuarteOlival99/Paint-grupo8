@@ -1,10 +1,9 @@
-package com.example.paint.ui.listeners
+package com.example.paint.data.sensors.shake
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import kotlin.math.sqrt
 
 class ShakeDetector : SensorEventListener {

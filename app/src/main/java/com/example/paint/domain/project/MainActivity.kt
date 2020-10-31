@@ -1,9 +1,12 @@
 package com.example.paint.domain.project
 
-import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -12,10 +15,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.paint.R
-import com.example.paint.ui.listeners.ShakeDetector
+import com.example.paint.data.sensors.shake.ShakeDetector
 import com.example.paint.ui.utils.NavigationManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity(),
         val id = item.itemId;
         when(item.itemId) {
             R.id.pincel_menu -> {
-                Toast.makeText(this,"Tapped on icon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Tapped on icon", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -81,6 +85,31 @@ class MainActivity : AppCompatActivity(),
         setSupportActionBar(toolbar)
         setupDrawerMenu()
         initSensor()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            var retVal = true
+            retVal = Settings.System.canWrite(this)
+            if (!retVal) {
+                if (!Settings.System.canWrite(applicationContext)) {
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                        Uri.parse("package:$packageName")
+                    )
+                    Toast.makeText(
+                        applicationContext,
+                        "Please, allow system settings for automatic logout ",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    startActivityForResult(intent, 200)
+                }
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "You are not allowed to wright ",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
         if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToPaint(

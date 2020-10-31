@@ -1,9 +1,15 @@
 package com.example.paint.ui.fragments
 
 import android.content.Context
+import android.content.Context.SENSOR_SERVICE
+import android.graphics.Color
 import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import butterknife.OnClick
 import com.example.paint.R
+import com.example.paint.data.sensors.shake.ShakeDetector
 import com.example.paint.ui.listeners.GestureListener
-import com.example.paint.ui.listeners.ShakeDetector
 import com.example.paint.ui.utils.MyCanvasView
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
+import kotlin.math.max
+import kotlin.properties.Delegates
 
 
 class CanvasFragment : Fragment(){
@@ -30,10 +37,17 @@ class CanvasFragment : Fragment(){
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
     private var mShakeDetector: ShakeDetector? = null
+    //luminosity
+    private var sensorManager: SensorManager? = null
+    private var lightSensor: Sensor? = null
+    private var lightEventListener: SensorEventListener? = null
+    private var maxValue = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initSensor()
+        sensorManager = context!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        lightSensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
     override fun onCreateView(
@@ -53,6 +67,39 @@ class CanvasFragment : Fragment(){
         // myCanvasView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
         canvasView.contentDescription = getString(R.string.canvasContentDescription)
         viewModel = ViewModelProviders.of(this).get(PaintViewModel::class.java)
+
+        if (lightSensor == null) {
+            Toast.makeText(context, "The device has no light sensor !", Toast.LENGTH_SHORT).show()
+        }
+
+        // max value for light sensor
+
+        // max value for light sensor
+        maxValue = lightSensor!!.maximumRange
+
+        lightEventListener = object : SensorEventListener {
+            override fun onSensorChanged(sensorEvent: SensorEvent) {
+                val value = sensorEvent.values[0]
+                (activity as AppCompatActivity).supportActionBar!!.title = "Luminosity : $value lx"
+
+                val percentagemLuz = (value * 100) / maxValue
+                if (percentagemLuz < 20){
+                    val brightness = (100 - percentagemLuz).toInt()
+                    Log.i("teste", brightness.toString())
+                    if (brightness >= 99){
+                        Settings.System.putInt(context!!.contentResolver, Settings.System.SCREEN_BRIGHTNESS,
+                            255
+                        )
+                    }else{
+                        Settings.System.putInt(context!!.contentResolver, Settings.System.SCREEN_BRIGHTNESS,
+                            brightness.toInt()
+                        )
+                    }
+                }
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor, i: Int) {}
+        }
 
         return canvasView
     }
@@ -89,10 +136,12 @@ class CanvasFragment : Fragment(){
             mAccelerometer,
             SensorManager.SENSOR_DELAY_UI
         )
+        sensorManager!!.registerListener(lightEventListener, lightSensor, SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     override fun onPause() { // Add the following line to unregister the Sensor Manager onPause
         mSensorManager!!.unregisterListener(mShakeDetector)
+        sensorManager!!.unregisterListener(lightEventListener)
         super.onPause()
     }
 
