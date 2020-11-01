@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/bola_preta"
@@ -95,7 +96,6 @@
         android:layout_below="@+id/cores"
         android:layout_above="@id/palete_vertical"
         android:background="@color/background"
-        android:layout_marginTop="10dp"
         >
         <TextView
             android:id="@+id/circulo"
