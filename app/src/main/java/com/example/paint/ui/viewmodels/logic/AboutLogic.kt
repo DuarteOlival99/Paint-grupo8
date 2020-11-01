@@ -1,5 +1,6 @@
 package com.example.paint.ui.viewmodels.logic
 
+import android.content.Context
 import com.example.paint.data.local.list.ListStorage
 
 class AboutLogic() {
@@ -12,6 +13,4 @@ class AboutLogic() {
     fun getBackgroundColor(): Int? {
         return storage.getBackgroundColor()
     }
-
-
 }

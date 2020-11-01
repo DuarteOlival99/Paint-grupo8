@@ -12,6 +12,7 @@
         android:required="true" />
 
     <application
+        android:name=".ui.utils.PaintApplication"
         android:allowBackup="true"
         android:configChanges="uiMode"
         android:icon="@mipmap/ic_launcher"

@@ -15,12 +15,13 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.paint.R
+import com.example.paint.data.sensors.battery.OnBatteryCurrentListener
 import com.example.paint.ui.viewmodels.viewmodels.AboutViewModel
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlin.math.log
 
 
-class AboutFragment : Fragment() {
+class AboutFragment : Fragment(), OnBatteryCurrentListener {
 
     private lateinit var viewModel : AboutViewModel
 
@@ -28,7 +29,6 @@ class AboutFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -45,25 +45,9 @@ class AboutFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         about.setBackgroundColor(viewModel.getBackgroundColor()!!)
-        val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        val batteryStatus = context!!.registerReceiver(null, iFilter)
-        val level = batteryStatus?.getIntExtra(
-            BatteryManager.EXTRA_LEVEL,
-            -1
-        ) ?: -1
-        val scale = batteryStatus?.getIntExtra(
-            BatteryManager.EXTRA_SCALE,
-            -1
-        ) ?: -1
-        val batteryPct = level / scale.toDouble()
-        val batLevel = (batteryPct * 100).toInt()
 
-        /*if (batLevel <= 20){
-            AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_YES
-            )
-        }*/
     }
+
 
     @OnClick(R.id.iconLinkedin_bruna)
     fun onClickIconLinkedinBruna(view: View){
@@ -107,6 +91,9 @@ class AboutFragment : Fragment() {
         startActivity(browserIntent)
     }
 
+    override fun onCurrentChanged(current: Double) {
+        Log.i("currentAbout", current.toString())
+    }
 
 
 }

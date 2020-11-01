@@ -1,22 +1,23 @@
 package com.example.paint.domain.project
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.example.paint.R
+import com.example.paint.data.sensors.battery.OnBatteryCurrentListener
 import com.example.paint.data.sensors.shake.ShakeDetector
 import com.example.paint.ui.fragments.CanvasFragment
 import com.example.paint.ui.utils.NavigationManager
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(),
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, OnBatteryCurrentListener {
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setupDrawerMenu()
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity(),
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater : MenuInflater = menuInflater
@@ -122,6 +125,10 @@ class MainActivity : AppCompatActivity(),
             finish()
         }
         super.onBackPressed()
+    }
+
+    override fun onCurrentChanged(current: Double) {
+        Log.i("current", current.toString())
     }
 
 }
