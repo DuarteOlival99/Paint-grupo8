@@ -1,13 +1,18 @@
 package com.example.paint.ui.fragments
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.BatteryManager
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
@@ -46,6 +51,19 @@ class SettingsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         //color()
+        val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        val batteryStatus = context!!.registerReceiver(null, iFilter)
+
+        val batteryPct: Float? = batteryStatus?.let { intent ->
+            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            level * 100 / scale.toFloat()
+        }
+
+        Log.i("batLevel", batteryPct.toString())
+        if (batteryPct!! <= 20){
+            Log.i("batLevel", batteryPct.toString())
+        }
 
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         pref.apply {
