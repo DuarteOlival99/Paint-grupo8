@@ -45,14 +45,6 @@ class CanvasFragment : Fragment(){
         lightSensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +73,7 @@ class CanvasFragment : Fragment(){
         maxValue = lightSensor!!.maximumRange
 
         lightEventListener = object : SensorEventListener {
+
             override fun onSensorChanged(sensorEvent: SensorEvent) {
                 val value = sensorEvent.values[0]
 
