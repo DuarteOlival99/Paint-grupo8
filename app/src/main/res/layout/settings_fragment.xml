@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
         <TextView
             android:id="@+id/textNoturno"
@@ -46,7 +47,7 @@
             fancy:fb_iconPosition="left"
             fancy:fb_radius="30dp"
             fancy:fb_text="@string/mudar_cor"
-            fancy:fb_textColor="@color/black"
+            fancy:fb_textColor="@color/white"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             app:layout_constraintRight_toRightOf="parent"

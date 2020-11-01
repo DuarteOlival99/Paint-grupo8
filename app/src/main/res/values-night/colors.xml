@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3E3726</color>
+    <color name="colorPrimary">#8C7D57</color>
     <color name="colorPrimaryDark">#1C005C</color>
     <color name="colorAccent">#025A52</color>
 
@@ -11,7 +11,7 @@
     <color name="black">#434343</color>
     <color name="settingsButton">#48526C</color>
     <color name="splashColor">#000000</color>
-    <color name="background">#000000</color>
+    <color name="background">#8F2C2C2C</color>
     <color name="textColor">#FFFFFF</color>
 
     <color name="grey">#919191</color>
@@ -19,5 +19,7 @@
     <color name="red">#F44336</color>
     <color name="blue">#2C3EA5</color>
     <color name="green">#4CAF50</color>
+    <color name="drawerBackground">#4A4A4A</color>
+    <color name="drawerText">#FFFFFF</color>
 
 </resources>

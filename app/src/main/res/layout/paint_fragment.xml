@@ -39,18 +39,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/button_down"
-            app:drawableTopCompat="@drawable/ic_color">
+            app:drawableTopCompat="@drawable/ic_color"
+            android:textColor="#837777"
+            >
         </TextView>
         <TextView
             android:id="@+id/textView_color_paint_canvas_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cor_canvas"
+            android:textColor="#837777"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/textView_color_paint"
-            app:drawableTopCompat="@drawable/icon_bucket">
+            app:drawableTopCompat="@drawable/icon_bucket"
+
+            >
         </TextView>
 
         <ImageButton
@@ -75,7 +80,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/button_down"
-            app:drawableTopCompat="@drawable/ic_brush_black">
+            app:drawableTopCompat="@drawable/ic_brush_black"
+            android:textColor="#837777">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,7 +94,8 @@
         android:layout_centerHorizontal="true"
         android:visibility="visible"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        >
     </ImageButton>
 
 
