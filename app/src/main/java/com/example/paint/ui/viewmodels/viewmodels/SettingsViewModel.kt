@@ -12,6 +12,21 @@ class SettingsViewModel ( application: Application ) : AndroidViewModel (applica
         settingsLogic.setBackgroundColor(mDefaultColor)
     }
 
+    fun setDarkModeBoolean(b: Boolean) {
+        settingsLogic.setDarkModeBoolean(b)
+    }
+
+    fun getDarkModeBoolean(): Boolean {
+        return settingsLogic.getDarkModeBoolean()
+    }
+
+    fun setDarkModeAutomatico(b: Boolean) {
+        settingsLogic.setDarkModeAutomatico(b)
+    }
+
+    fun getDarkModeAutomatico(): Boolean {
+        return settingsLogic.getDarkModeAutomatico()
+    }
 
 
 }

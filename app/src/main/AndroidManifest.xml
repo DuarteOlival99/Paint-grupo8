@@ -20,12 +20,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity
-        android:name=".ui.activities.PaintActivity"
-        android:label="@string/title_activity_paint">
+        <activity android:name=".ui.activities.PaintActivity"
+            android:configChanges="uiMode"
+            android:label="@string/title_activity_paint">
         </activity>
-        <activity android:name=".domain.project.MainActivity" />
-        <activity android:name=".ui.activities.SplashActivity">
+        <activity android:name=".domain.project.MainActivity"
+            android:configChanges="uiMode">
+        </activity>
+        <activity android:name=".ui.activities.SplashActivity"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

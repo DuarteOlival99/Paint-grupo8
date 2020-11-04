@@ -50,20 +50,9 @@ class SettingsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        //color()
-        val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        val batteryStatus = context!!.registerReceiver(null, iFilter)
-
-        val batteryPct: Float? = batteryStatus?.let { intent ->
-            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-            level * 100 / scale.toFloat()
-        }
-
-        Log.i("batLevel", batteryPct.toString())
-        if (batteryPct!! <= 20){
-            Log.i("batLevel", batteryPct.toString())
-        }
+        //darkMode
+        switchButtondark.isChecked = viewModel.getDarkModeBoolean()
+        switchButtondarkAutomatico.isChecked = viewModel.getDarkModeAutomatico()
 
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         pref.apply {
@@ -96,6 +85,32 @@ class SettingsFragment : Fragment() {
             }
         })
         colorPicker.show()
+    }
+
+    @OnClick(R.id.switchButtondark)
+    fun onClickSwitchButtondark(view: View){
+        if (switchButtondark.isChecked){
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+            viewModel.setDarkModeBoolean(true)
+        }else{
+            Log.i("setDarkModeBoolean", viewModel.getDarkModeBoolean().toString())
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+            )
+            viewModel.setDarkModeBoolean(false)
+            Log.i("setDarkModeBoolean", viewModel.getDarkModeBoolean().toString())
+        }
+    }
+
+    @OnClick(R.id.switchButtondarkAutomatico)
+    fun onClickSwitchButtondarkAutomatico(view: View){
+        if (switchButtondarkAutomatico.isChecked){
+            viewModel.setDarkModeAutomatico(true)
+        }else{
+            viewModel.setDarkModeAutomatico(false)
+        }
     }
 
 
