@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity(),
         when(item.itemId) {
             R.id.pincel_menu -> {
                 Toast.makeText(this, "Clean screen", Toast.LENGTH_SHORT).show();
-                //val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
-                //fragment.cleanScreen()
+                val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+                fragment.cleanScreen()
             }
         }
 
@@ -85,6 +85,31 @@ class MainActivity : AppCompatActivity(),
         )
         setSupportActionBar(toolbar)
         setupDrawerMenu()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            var retVal = true
+            retVal = Settings.System.canWrite(this)
+            if (!retVal) {
+                if (!Settings.System.canWrite(applicationContext)) {
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                        Uri.parse("package:$packageName")
+                    )
+                    Toast.makeText(
+                        applicationContext,
+                        "Please, allow system settings for automatic logout ",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    startActivityForResult(intent, 200)
+                }
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "You are not allowed to wright ",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
 
         if (!screenRotated(savedInstanceState)) {
