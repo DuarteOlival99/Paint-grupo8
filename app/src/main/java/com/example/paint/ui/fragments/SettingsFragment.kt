@@ -68,6 +68,7 @@ class SettingsFragment : Fragment() {
         openColorPicker()
     }
 
+
     private fun openColorPicker() {
         val colorPicker = AmbilWarnaDialog(context, mDefaultColor, object : OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog) {}
