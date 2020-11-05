@@ -33,9 +33,13 @@ class MainActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.paint -> {
                 title = getText(R.string.paint).toString()
-//                val intent = Intent(this, PaintActivity::class.java).apply {}
-//                startActivity(intent)
                 NavigationManager.goToPaint(
+                    supportFragmentManager
+                )
+            }
+            R.id.map -> {
+                title = getText(R.string.map).toString()
+                NavigationManager.goToMap(
                     supportFragmentManager
                 )
             }

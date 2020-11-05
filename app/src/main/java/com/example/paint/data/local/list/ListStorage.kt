@@ -1,5 +1,6 @@
 package com.example.paint.data.local.list
 
+import android.location.Location
 import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.example.paint.R
@@ -22,6 +23,8 @@ class ListStorage private constructor() {
 
     private var darkModeBoolean = false
     private var darkModeAutomatico = true
+
+    private var location: Location? = null
 
     companion object {
 
@@ -140,4 +143,11 @@ class ListStorage private constructor() {
         return darkModeAutomatico
     }
 
+    fun updateLocation(lastLocation: Location?) {
+        location = lastLocation
+    }
+
+    fun getLocation(): Location? {
+        return location
+    }
 }
