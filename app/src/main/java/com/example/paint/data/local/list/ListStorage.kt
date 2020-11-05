@@ -20,6 +20,9 @@ class ListStorage private constructor() {
     private var drawTriangle = false
     private var drawSquare = false
 
+    private var darkModeBoolean = false
+    private var darkModeAutomatico = true
+
     companion object {
 
         private var instance: ListStorage? = null
@@ -119,6 +122,22 @@ class ListStorage private constructor() {
     }
     fun setSquare(b: Boolean) {
         drawSquare = b
+    }
+
+    fun setDarkModeBoolean(b: Boolean) {
+        darkModeBoolean = b
+    }
+
+    fun getDarkModeBoolean() : Boolean {
+        return darkModeBoolean
+    }
+
+    fun setDarkModeAutomatico(b: Boolean) {
+        darkModeAutomatico = b
+    }
+
+    fun getDarkModeAutomatico(): Boolean {
+        return darkModeAutomatico
     }
 
 }

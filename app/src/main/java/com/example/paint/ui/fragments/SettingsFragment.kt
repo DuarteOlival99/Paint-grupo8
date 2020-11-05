@@ -1,13 +1,18 @@
 package com.example.paint.ui.fragments
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.BatteryManager
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
@@ -45,7 +50,9 @@ class SettingsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        //color()
+        //darkMode
+        switchButtondark.isChecked = viewModel.getDarkModeBoolean()
+        switchButtondarkAutomatico.isChecked = viewModel.getDarkModeAutomatico()
 
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         pref.apply {
@@ -78,6 +85,32 @@ class SettingsFragment : Fragment() {
             }
         })
         colorPicker.show()
+    }
+
+    @OnClick(R.id.switchButtondark)
+    fun onClickSwitchButtondark(view: View){
+        if (switchButtondark.isChecked){
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+            viewModel.setDarkModeBoolean(true)
+        }else{
+            Log.i("setDarkModeBoolean", viewModel.getDarkModeBoolean().toString())
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+            )
+            viewModel.setDarkModeBoolean(false)
+            Log.i("setDarkModeBoolean", viewModel.getDarkModeBoolean().toString())
+        }
+    }
+
+    @OnClick(R.id.switchButtondarkAutomatico)
+    fun onClickSwitchButtondarkAutomatico(view: View){
+        if (switchButtondarkAutomatico.isChecked){
+            viewModel.setDarkModeAutomatico(true)
+        }else{
+            viewModel.setDarkModeAutomatico(false)
+        }
     }
 
 

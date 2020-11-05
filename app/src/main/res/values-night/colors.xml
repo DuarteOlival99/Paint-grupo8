@@ -13,6 +13,7 @@
     <color name="splashColor">#000000</color>
     <color name="background">#8F2C2C2C</color>
     <color name="textColor">#FFFFFF</color>
+    <color name="aboutTitle">#E0B649</color>
 
     <color name="grey">#919191</color>
     <color name="yellow">#FFEB3B</color>

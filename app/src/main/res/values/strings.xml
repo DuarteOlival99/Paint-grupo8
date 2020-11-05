@@ -36,6 +36,8 @@
     <string name="atual">Atual:</string>
     <string name="cor_canvas_alterada">Cor do Canvas Alterada</string>
     <string name="cor_pincel_alterada">Cor Pincel Alterada</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_automatico_aos_20_de_bateria">Dark Mode automatico aos 20% de bateria</string>
 
     <string name="map">Mapa</string>
 

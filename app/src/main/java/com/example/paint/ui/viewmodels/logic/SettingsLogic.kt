@@ -14,5 +14,21 @@ class SettingsLogic() {
         return storage.getBackgroundColor()
     }
 
+    fun setDarkModeBoolean(b: Boolean) {
+        storage.setDarkModeBoolean(b)
+    }
+
+    fun getDarkModeBoolean() : Boolean {
+        return storage.getDarkModeBoolean()
+    }
+
+    fun setDarkModeAutomatico(b: Boolean) {
+        storage.setDarkModeAutomatico(b)
+    }
+
+    fun getDarkModeAutomatico(): Boolean {
+        return storage.getDarkModeAutomatico()
+    }
+
 
 }

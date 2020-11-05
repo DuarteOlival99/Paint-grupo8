@@ -1,17 +1,21 @@
 package com.example.paint.data.sensors.battery
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.paint.data.local.list.ListStorage
 
 class Battery private constructor(private val context: Context) : Runnable {
 
     private val TAG = Battery::class.java.simpleName
-    private val TIME_BETWEEN_UPDATES = 2000L
+    private var TIME_BETWEEN_UPDATES = 2000L
+    private val storage = ListStorage.getInstance()
 
     companion object {
 
@@ -28,7 +32,6 @@ class Battery private constructor(private val context: Context) : Runnable {
 
     private fun start() {
         handler.postDelayed(this, TIME_BETWEEN_UPDATES)
-
     }
 
     private fun getBaterryCurrentNow() : Double {
@@ -45,15 +48,11 @@ class Battery private constructor(private val context: Context) : Runnable {
         val batteryPct = level / scale.toDouble()
         val batLevel = (batteryPct * 100).toInt()
 
-        if (batLevel <= 20){
-            Log.i("level", batLevel.toString())
+        if (batLevel <= 20 && storage.getDarkModeAutomatico()){
             AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_YES
             )
-        } else{
-            AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_NO
-            )
+            storage.setDarkModeBoolean(true)
         }
 
         return batLevel.toDouble()
