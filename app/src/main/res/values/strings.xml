@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Paint</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
+    <string name="settings">Definiçoes</string>
+    <string name="profile">Perfil</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="paint">Paint</string>
@@ -28,22 +28,15 @@
     <string name="sobreira_facebook" translatable="false">Sobreira Facebook</string>
     <string name="sobreira_instagram" translatable="false">Sobreira Instagram</string>
     <string name="title_activity_paint" translatable="false">PaintActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
+
     <string name="pincel">Pincel</string>
     <string name="cor">Cor</string>
     <string name="esperssura_do_pincel">Espessura do pincel</string>
-
-    <string name="canvasContentDescription">Mini Paint is a simple line drawing app.
-   Drag your fingers to draw. Rotate the phone to clear.</string>
     <string name="cor_canvas">cor canvas</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="atual">Atual:</string>
     <string name="cor_canvas_alterada">Cor do Canvas Alterada</string>
     <string name="cor_pincel_alterada">Cor Pincel Alterada</string>
+
+    <string name="map">Mapa</string>
 
 </resources>

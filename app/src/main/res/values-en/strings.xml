@@ -12,4 +12,12 @@
     <string name="mudar_a_cor_de_background">Change background color</string>
     <string name="mudar_cor">Change color</string>
     <string name="desenhem_e_desfrutem">Draw and enjoy!</string>
+    <string name="map">Map</string>
+    <string name="cor">Color</string>
+    <string name="cor_canvas">Canvas Color</string>
+    <string name="esperssura_do_pincel">Brush thickness</string>
+    <string name="pincel">Brush</string>
+    <string name="atual">Actual</string>
+    <string name="cor_canvas_alterada">Canvas Color Changed</string>
+    <string name="cor_pincel_alterada">Brush Color Changed</string>
 </resources>

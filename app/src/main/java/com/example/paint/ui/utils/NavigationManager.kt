@@ -36,6 +36,13 @@ class NavigationManager {
             )
         }
 
+        fun goToMap(fm: FragmentManager) {
+            placeFragment(
+                fm,
+                AboutFragment()
+            )
+        }
+
         fun goToAbout(fm: FragmentManager) {
             placeFragment(
                 fm,
