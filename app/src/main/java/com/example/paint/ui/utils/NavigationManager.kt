@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.paint.R
 import com.example.paint.ui.fragments.AboutFragment
+import com.example.paint.ui.fragments.MapFragment
 import com.example.paint.ui.fragments.PaintFragment
 import com.example.paint.ui.fragments.SettingsFragment
 
@@ -39,7 +40,7 @@ class NavigationManager {
         fun goToMap(fm: FragmentManager) {
             placeFragment(
                 fm,
-                AboutFragment()
+                MapFragment()
             )
         }
 

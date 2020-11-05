@@ -20,4 +20,6 @@
     <string name="atual">Actual</string>
     <string name="cor_canvas_alterada">Canvas Color Changed</string>
     <string name="cor_pincel_alterada">Brush Color Changed</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_automatico_aos_20_de_bateria">Auto Dark Mode bellow 20% battery</string>
 </resources>

@@ -16,7 +16,7 @@
     <group>
         <item
             android:id="@+id/map"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_map"
             android:title="@string/map"
             />
 
