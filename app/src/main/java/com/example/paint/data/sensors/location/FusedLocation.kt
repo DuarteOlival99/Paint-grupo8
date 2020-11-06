@@ -13,7 +13,7 @@ import com.google.android.gms.location.*
 class FusedLocation private constructor(context: Context) : LocationCallback() {
         private val TAG = FusedLocation::class.java.simpleName
         // Intervalos de tempo em que a localização é verificada, 2 segundos
-        private val TIME_BETWEEN_UPDATES = 2000L
+        private val TIME_BETWEEN_UPDATES = 1000L
         // Este atributo é utilizado para configurar os pedidos de localização
         private var locationRequest: LocationRequest? = null
         // Este atributo será utilizado para acedermos à API da Fused Location
@@ -74,7 +74,8 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
     override fun onLocationResult(locationResult: LocationResult?) {
         Log.i(TAG,locationResult?.lastLocation.toString())
-        storage.updateLocation(locationResult!!.lastLocation)
+        storage.updatePreviousLocation() // da update da location que tinha para a previous location
+        storage.updateLocation(locationResult!!.lastLocation) // da update da location atual
         locationResult?.let { notifyListeners(it) }
         super.onLocationResult(locationResult)
     }

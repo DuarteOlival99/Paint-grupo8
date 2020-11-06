@@ -65,7 +65,6 @@ dependencies {
     implementation 'com.github.medyo:fancybuttons:1.9.1'
     //dark mode
     implementation 'com.google.android.material:material:1.2.0-alpha06'
-
     //google maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5+'

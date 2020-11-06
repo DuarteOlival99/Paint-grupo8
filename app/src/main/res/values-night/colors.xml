@@ -22,5 +22,6 @@
     <color name="green">#4CAF50</color>
     <color name="drawerBackground">#4A4A4A</color>
     <color name="drawerText">#FFFFFF</color>
+    <color name="textStartDrawingMap">#FFFFFF</color>
 
 </resources>

@@ -4,6 +4,7 @@ import android.location.Location
 import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.example.paint.R
+import com.google.android.gms.maps.model.LatLng
 
 class ListStorage private constructor() {
 
@@ -24,7 +25,10 @@ class ListStorage private constructor() {
     private var darkModeBoolean = false
     private var darkModeAutomatico = true
 
+    private var DrawingMap = false
+
     private var location: Location? = null
+    private var previousLocation : Location? = null
 
     companion object {
 
@@ -149,5 +153,25 @@ class ListStorage private constructor() {
 
     fun getLocation(): Location? {
         return location
+    }
+
+    fun updatePreviousLocation() {
+        previousLocation = location
+    }
+
+    fun getPreviousLocation(): Location? {
+        return previousLocation
+    }
+
+    fun getDrawingMap(): Boolean {
+        return DrawingMap
+    }
+
+    fun setDrawingMap(b: Boolean) {
+        DrawingMap = b
+    }
+
+    fun previousLocationEqualLocation() {
+        previousLocation = location
     }
 }

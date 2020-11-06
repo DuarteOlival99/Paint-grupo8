@@ -14,6 +14,8 @@
     <color name="background">#FFFFFF</color>
     <color name="textColor">#000000</color>
     <color name="aboutTitle">#E0B649</color>
+    <color name="mapStartRoute">#2B6E01</color>
+    <color name="mapEndRoute">#950000</color>
 
     <color name="grey">#919191</color>
     <color name="yellow">#FFEB3B</color>
@@ -22,5 +24,6 @@
     <color name="green">#4CAF50</color>
     <color name="drawerBackground">#FFFFFF</color>
     <color name="drawerText">#000000</color>
+    <color name="textStartDrawingMap">#FFFFFF</color>
 
 </resources>
