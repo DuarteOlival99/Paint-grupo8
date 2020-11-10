@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/fragment_map"
     tools:context="com.example.paint.ui.fragments.MapFragment">
 
     <LinearLayout
@@ -16,22 +17,45 @@
         android:paddingBottom="30dp"
         >
 
-        <Button
-            android:id="@+id/startRouteMap"
-            android:layout_width="200dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/start_routing"
-            android:textColor="@color/textStartDrawingMap"
-            android:background="@drawable/rounder_corner"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/layout_pesquisa_parks"
-            app:layout_constraintBottom_toBottomOf="@+id/layout_pesquisa_parks"
-            >
-        </Button>
+            android:layout_margin="5dp"
+            android:elevation="4dp">
+
+            <Button
+                android:id="@+id/historyMap"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_history"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/startRouteMap"
+                app:layout_constraintTop_toTopOf="@+id/startRouteMap"
+                app:layout_constraintBottom_toBottomOf="@+id/startRouteMap"
+                >
+            </Button>
+
+            <Button
+                android:id="@+id/startRouteMap"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/start_routing"
+                android:textColor="@color/textStartDrawingMap"
+                android:background="@drawable/rounder_corner"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintStart_toEndOf="@+id/historyMap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+            </Button>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -107,11 +107,11 @@ class MainActivity : AppCompatActivity(),
                     startActivityForResult(intent, 200)
                 }
             } else {
-                Toast.makeText(
-                    applicationContext,
-                    "You are not allowed to wright ",
-                    Toast.LENGTH_LONG
-                ).show()
+//                Toast.makeText(
+//                    applicationContext,
+//                    "You are not allowed to wright ",
+//                    Toast.LENGTH_LONG
+//                ).show()
             }
         }
 

@@ -43,5 +43,8 @@
     <string name="map">Mapa</string>
     <string name="start_routing">Start Drawing</string>
     <string name="stop_drawing">Stop Drawing</string>
+    <string name="historico_de_percursos">Histórico de percursos</string>
+    <string name="origem">Origem:</string>
+    <string name="destino">Destino:</string>
 
 </resources>

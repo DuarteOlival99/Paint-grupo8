@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/cardView_history"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/CardView.Light"
+    android:layout_margin="8dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/background"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/o"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        >
+
+        <TextView
+            android:id="@+id/posicao_inicial"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/green"
+            android:drawablePadding="5dp"
+            android:text="@string/origem"
+            android:gravity="start"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/posicao_inicial_text"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:text=""
+            android:gravity="start"
+            android:textColor="@color/textColorUnderline"
+            app:layout_constraintStart_toEndOf="@+id/posicao_inicial"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/posicao_inicial"
+            app:layout_constraintBottom_toBottomOf="@+id/posicao_inicial"
+            />
+
+        <TextView
+            android:id="@+id/posicao_final"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/red"
+            android:drawablePadding="5dp"
+            android:text="@string/destino"
+            android:gravity="start"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/posicao_inicial_text"
+            app:drawableStartCompat="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/posicao_final_text"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:text=""
+            android:gravity="start"
+            android:textColor="@color/textColorUnderline"
+            app:layout_constraintStart_toEndOf="@+id/posicao_final"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/posicao_final"
+            app:layout_constraintBottom_toBottomOf="@+id/posicao_final"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

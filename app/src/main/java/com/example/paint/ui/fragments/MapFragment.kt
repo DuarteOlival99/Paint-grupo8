@@ -1,14 +1,19 @@
 package com.example.paint.ui.fragments
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Typeface
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -21,11 +26,14 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.paint.R
+import com.example.paint.data.entity.HistoryRoute
 import com.example.paint.data.sensors.location.FusedLocation
 import com.example.paint.data.sensors.location.OnLocationChangedListener
+import com.example.paint.ui.adapters.HistoryListAdapter
 import com.example.paint.ui.utils.Extensions
 import com.example.paint.ui.viewmodels.viewmodels.MapViewModel
 import com.google.android.gms.location.LocationResult
@@ -35,7 +43,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.fragment_map.view.*
+import kotlinx.android.synthetic.main.history_map.*
+import kotlinx.android.synthetic.main.history_map.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo2.ui.fragments.PermissionedFragment
+import java.io.IOException
+import java.util.*
 
 const val REQUEST_CODE = 100
 
@@ -45,6 +57,7 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
     private lateinit var viewModel: MapViewModel
     private var map: GoogleMap? = null
     private var location: Location? = null
+    private var aproximaBoolean = false
 
     private val extensions = Extensions()
 
@@ -55,14 +68,18 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         viewModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
-        ButterKnife.bind(this,view)
+        ButterKnife.bind(this, view)
         view.map_view.onCreate(savedInstanceState)
         return view
     }
 
     override fun onStart() {
-        super.onRequestPermissions(activity?.baseContext!!, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION))
+        super.onRequestPermissions(
+            activity?.baseContext!!, arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        )
         super.onStart()
     }
 
@@ -88,7 +105,12 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
     }
 
 
-    private fun adicionaMarker(position: LatLng, title: String, snippet: String, icon: BitmapDescriptor) {
+    fun adicionaMarker(
+        position: LatLng,
+        title: String,
+        snippet: String,
+        icon: BitmapDescriptor
+    ) {
         val marker = MarkerOptions()
             .position(position)
             .title(title)
@@ -100,14 +122,15 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
 
     override fun onMapReady(map: GoogleMap?) {
         this.map = map
-        if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                activity!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+        if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                activity!!, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED ) {
             return
         }
         this.map!!.isMyLocationEnabled = true
 
-       // zoom()
-        //mapInfoWindow()
+        zoom()
+        mapInfoWindow()
 
         // Set listeners for click events.
         map!!.setOnPolylineClickListener(this)
@@ -119,12 +142,35 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
         // Polylines are useful to show a route or some other connection between points.
         val l1 : LatLng = viewModel.getPreviousLocation()
         val l2 : LatLng = viewModel.getActualLocation()
-        val polyline1 = map!!.addPolyline(PolylineOptions()
-            .clickable(true)
-            .add(
-                l1,
-                l2,
-                ))
+        val polyline1 = map!!.addPolyline(
+            PolylineOptions()
+                .clickable(true)
+                .add(
+                    l1,
+                    l2,
+                )
+        )
+        // Store a data object with the polyline, used here to indicate an arbitrary type.
+        polyline1!!.tag = "B"
+        // Style the polyline.
+        stylePolyline(polyline1)
+
+        zoom()
+    }
+
+    fun drawPolyline2(previousLocation: Location, actualLocation: Location){
+        // Add polylines to the map.
+        // Polylines are useful to show a route or some other connection between points.
+        val l1 : LatLng = extensions.LocationToLatLng(previousLocation)
+        val l2 : LatLng = extensions.LocationToLatLng(actualLocation)
+        val polyline1 = map!!.addPolyline(
+            PolylineOptions()
+                .clickable(true)
+                .add(
+                    l1,
+                    l2,
+                )
+        )
         // Store a data object with the polyline, used here to indicate an arbitrary type.
         polyline1!!.tag = "B"
         // Style the polyline.
@@ -143,7 +189,8 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
             "A" -> {
                 // Use a custom bitmap as the cap at the start of the line.
                 polyline.startCap = CustomCap(
-                    BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 10f)
+                    BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 10f
+                )
             }
             "B" -> {
                 // Use a round cap at the start of the line.
@@ -171,8 +218,10 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
             // The default pattern is a solid stroke.
             polyline.pattern = null
         }
-        Toast.makeText(context, "Route type " + polyline.tag.toString(),
-            Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context, "Route type " + polyline.tag.toString(),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onPolygonClick(polygon: Polygon) {
@@ -253,7 +302,11 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
         return ContextCompat.getDrawable(context, vectorResId)?.run {
             setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-            val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val bitmap = Bitmap.createBitmap(
+                intrinsicWidth,
+                intrinsicHeight,
+                Bitmap.Config.ARGB_8888
+            )
             draw(Canvas(bitmap))
             BitmapDescriptorFactory.fromBitmap(bitmap)
         }
@@ -278,23 +331,99 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
         }
     }
 
+    fun getAdress() : String{
+        var addressResult = ""
+        val geocoder : Geocoder = Geocoder(this.context, Locale.getDefault())
+        try {
+            val addresses : List<Address> = geocoder.getFromLocation(
+                location!!.latitude,
+                location!!.longitude,
+                1
+            )
+
+            val address = addresses[0].getAddressLine(0)
+            val area = addresses[0].locality
+            val city = addresses[0].adminArea
+            val country = addresses[0].countryName
+            val postalCode = addresses[0].postalCode
+
+            addressResult = "$address"
+        }catch (e: IOException){
+            e.printStackTrace()
+        }
+
+        return addressResult
+    }
+
+    fun goToMap(l: Location){
+        val gmmIntentUri = Uri.parse("google.navigation:q=${l.latitude},${l.longitude}")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        startActivity(mapIntent)
+    }
+
     @OnClick(R.id.startRouteMap)
     fun onClickStartRouteMap(view: View){
-        val iconRed: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
-        val iconGreen: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+        val iconRed: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(
+            BitmapDescriptorFactory.HUE_RED
+        )
+        val iconGreen: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(
+            BitmapDescriptorFactory.HUE_GREEN
+        )
 
         if(viewModel.getDrawingMap()){ // true é pk carregou em start e ta a desenhar -> visivel stop drawing
             startRouteMap.text = getString(R.string.start_routing)
             startRouteMap.backgroundTintList = resources.getColorStateList(R.color.mapStartRoute);
             viewModel.setDrawingMap(false)
-            adicionaMarker(LatLng(location!!.latitude.toDouble() , location!!.longitude.toDouble()), "Stop Drawing", "", iconRed)
+            viewModel.addFinalPosition(location)
+            if (map != null){
+                adicionaMarker(
+                    LatLng(
+                        location!!.latitude.toDouble(),
+                        location!!.longitude.toDouble()
+                    ), "Stop Drawing", getAdress(), iconRed
+                )
+            }
         }else { // false é pk esta a espera para desenhar -> visivel start drawing
             startRouteMap.text = getString(R.string.stop_drawing)
             startRouteMap.backgroundTintList = resources.getColorStateList(R.color.mapEndRoute);
             viewModel.previousLocationEqualLocation()
             viewModel.setDrawingMap(true)
-            adicionaMarker(LatLng(location!!.latitude.toDouble() , location!!.longitude.toDouble()), "Start Drawing", "", iconGreen)
+            viewModel.addInicalPosition(location)
+            if (map != null){
+                adicionaMarker(
+                    LatLng(
+                        location!!.latitude.toDouble(),
+                        location!!.longitude.toDouble()
+                    ), "Start Drawing", getAdress(), iconGreen
+                )
+            }
         }
+    }
+
+    @OnClick(R.id.historyMap)
+    fun onclickHistoryMap(view: View){
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.history_map, null)
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(dialogView)
+
+        val mAlertDialog = mBuilder.show()
+
+        mAlertDialog.list_history.layoutManager = LinearLayoutManager(activity as Context)
+        mAlertDialog.list_history.adapter =
+            HistoryListAdapter(
+                viewModel,
+                activity as Context,
+                R.layout.history_route_expression,
+                viewModel.getHistoryRouteList() as MutableList<HistoryRoute>,
+                this@MapFragment,
+                mAlertDialog
+            )
+
+        mAlertDialog.historyMap_close.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+
     }
 
     override fun onLocationChanged(locationResult: LocationResult) {
@@ -303,15 +432,19 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
         if(viewModel.getDrawingMap()){
             Log.i("drawPolyline", "drawPolyline")
             drawPolyline()
+            viewModel.addRoute(viewModel.getInicialLocation(), viewModel.getfinalLocation())
         }
-        if (this.location == null) {
+        if (this.location != null) {
             location.let { this.location = it }
-            //zoom()
+            if(!aproximaBoolean){
+                zoom()
+                aproximaBoolean = true
+            }
         } else if ((this.location!!.latitude != location.latitude) ||
             (this.location!!.longitude != location.longitude)
         ) {
             location.let { this.location = it }
-           // zoom()
+            //zoom()
         }
     }
 }
