@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/get_history_canvas"
+        android:icon="@drawable/ic_get_canvas"
+        android:orderInCategory="100"
+        android:title="@string/get_history_canvas"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/save_menu"
+        android:icon="@drawable/ic_save"
+        android:orderInCategory="100"
+        android:title="@string/save"
+        app:showAsAction="always"
+        />
+
+</menu>

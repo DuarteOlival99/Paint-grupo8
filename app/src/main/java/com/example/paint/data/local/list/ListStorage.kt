@@ -4,8 +4,7 @@ import android.location.Location
 import android.util.Log
 import com.example.paint.R
 import com.example.paint.data.entity.HistoryRoute
-import com.example.paint.data.entity.Route
-import com.google.android.gms.maps.model.LatLng
+import com.example.paint.data.entity.Path
 
 class ListStorage private constructor() {
 
@@ -30,10 +29,11 @@ class ListStorage private constructor() {
 
     private var location: Location? = null
     private var previousLocation : Location? = null
+
     private var historyRoute = mutableListOf<HistoryRoute>()
     private var provisionalPositionInicial : Location? = null
     private var provisionalPositionfinal : Location? = null
-    private var provisionalRoutelist : List<Route> = emptyList()
+    private var provisionalRoutelist : List<Path> = emptyList()
 
     companion object {
 
@@ -191,29 +191,20 @@ class ListStorage private constructor() {
 
         val provisionalRoute : HistoryRoute = HistoryRoute(provisionalPositionInicial, provisionalPositionfinal, provisionalRoutelist)
         historyRoute.add(provisionalRoute)
-
-        Log.i("provisionalRoute", provisionalRoute.toString())
-        Log.i("historyRoute", historyRoute.toString())
-
-        for(item in historyRoute){
-            Log.i("posicaoInicial: ", item.posicaoInicial.toString())
-            Log.i("posicaoFinal: ", item.posicaoFinal.toString())
-        }
     }
 
     fun addRoute(previousLocation: Location, actualLocation: Location) {
         if(provisionalRoutelist.isEmpty()){
-            var list : MutableList<Route> = mutableListOf()
-            val path : Route = Route(previousLocation, actualLocation)
+            var list : MutableList<Path> = mutableListOf()
+            val path : Path = Path(previousLocation, actualLocation)
             list.add(path)
             provisionalRoutelist = list
         }else{
-            var list : MutableList<Route> = provisionalRoutelist as MutableList<Route>
-            val path : Route = Route(previousLocation, actualLocation)
+            var list : MutableList<Path> = provisionalRoutelist as MutableList<Path>
+            val path : Path = Path(previousLocation, actualLocation)
             list.add(path)
             provisionalRoutelist = list
         }
-
         Log.i("HistoryList", provisionalRoutelist.toString())
     }
 

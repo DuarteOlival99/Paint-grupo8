@@ -56,6 +56,7 @@ class HistoryListAdapter(
     override fun onBindViewHolder(holder: HistoryListViewHolder, position: Int) {
         holder.origem.text = getAdress(listHistoryRoute[position].posicaoInicial!!)
         holder.destino.text = getAdress(listHistoryRoute[position].posicaoFinal!!)
+
         val item = holder.itemView
 
         item.posicao_inicial_text.paint.isUnderlineText = true

@@ -71,17 +71,32 @@
         </ImageButton>
 
         <TextView
-
             android:id="@+id/textView_brush_paint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pincel"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/textView_clean"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/button_down"
+            app:layout_constraintLeft_toLeftOf="@+id/button_down"
             app:drawableTopCompat="@drawable/ic_brush_black"
             android:textColor="#837777">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/textView_clean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clean"
+            app:layout_constraintLeft_toRightOf="@id/textView_brush_paint"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:drawableTopCompat="@drawable/eraser"
+            android:drawableTint="#837777"
+            android:textColor="#837777"
+            >
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

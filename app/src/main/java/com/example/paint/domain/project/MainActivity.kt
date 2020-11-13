@@ -1,32 +1,47 @@
 package com.example.paint.domain.project
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.hardware.Sensor
-import android.hardware.SensorManager
+import android.graphics.Paint
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paint.R
+import com.example.paint.data.entity.HistoryRoute
 import com.example.paint.data.sensors.battery.OnBatteryCurrentListener
-import com.example.paint.data.sensors.shake.ShakeDetector
+import com.example.paint.ui.adapters.HistoryCanvasListAdapter
+import com.example.paint.ui.adapters.HistoryListAdapter
 import com.example.paint.ui.fragments.CanvasFragment
 import com.example.paint.ui.utils.NavigationManager
+import com.example.paint.ui.viewmodels.viewmodels.MapViewModel
+import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_history_canvas.*
+import kotlinx.android.synthetic.main.dialog_history_map.*
+import kotlinx.android.synthetic.main.dialog_save_canvas.*
 
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener, OnBatteryCurrentListener {
+
+    private lateinit var viewModel: PaintViewModel
+
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setupDrawerMenu()
@@ -55,26 +70,73 @@ class MainActivity : AppCompatActivity(),
                     supportFragmentManager
                 )
             }
+            R.id.teste -> {
+                title = "teste"
+                NavigationManager.goToTeste(
+                    supportFragmentManager
+                )
+            }
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
 
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater : MenuInflater = menuInflater
-        inflater.inflate(R.menu.pincel_menu, menu);
+        inflater.inflate(R.menu.options_menu, menu);
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId;
         when(item.itemId) {
-            R.id.pincel_menu -> {
-                Toast.makeText(this, "Clean screen", Toast.LENGTH_SHORT).show();
+            R.id.save_menu -> {
                 val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
-                fragment.cleanScreen()
+                val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_save_canvas, null)
+                val mBuilder = AlertDialog.Builder(this)
+                    .setView(dialogView)
+
+                val mAlertDialog = mBuilder.show()
+
+                mAlertDialog.imageView.setImageBitmap( fragment.getImageCanvas())
+
+                mAlertDialog.buttonUpload.setOnClickListener {
+                    val imageTitle : String = mAlertDialog.editText.text.toString()
+                    fragment.saveFirebaseCanvas(imageTitle)
+                    mAlertDialog.dismiss()
+                }
+
+                mAlertDialog.dialog_save_canvas_close.setOnClickListener {
+                    mAlertDialog.dismiss()
+                }
+
+            }
+            R.id.get_history_canvas -> {
+                val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+                val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_history_canvas, null)
+                val mBuilder = AlertDialog.Builder(this)
+                    .setView(dialogView)
+
+                val mAlertDialog = mBuilder.show()
+
+//                mAlertDialog.list_history_canvas.layoutManager = LinearLayoutManager(this)
+//                mAlertDialog.list_history_canvas.adapter =
+//                    HistoryCanvasListAdapter(
+//                        viewModel,
+//                        this,
+//                        R.layout.history_canvas_expression,
+//                        viewModel.getCanvasHistory()
+//                    )
+
+                mAlertDialog.buttonUpload.setOnClickListener {
+                    val imageTitle : String = mAlertDialog.editText.text.toString()
+                    fragment.saveFirebaseCanvas(imageTitle)
+                    mAlertDialog.dismiss()
+                }
+
+                mAlertDialog.dialog_save_canvas_close.setOnClickListener {
+                    mAlertDialog.dismiss()
+                }
             }
         }
 
@@ -84,6 +146,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        viewModel = ViewModelProviders.of(this).get(PaintViewModel::class.java)
         NavigationManager.goToPaint(
             supportFragmentManager
         )

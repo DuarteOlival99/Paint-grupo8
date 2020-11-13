@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "122263382365",
+    "firebase_url": "https://paintg08.firebaseio.com",
+    "project_id": "paintg08",
+    "storage_bucket": "paintg08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122263382365:android:2d1369b057d2afa09c60b4",
+        "android_client_info": {
+          "package_name": "com.example.paint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122263382365-4f7lmje9uq1ngs4teaa5f8njhmva2vu5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtkpolNacdr5itYtZcBlL2KzJ9BLoU2CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122263382365-4f7lmje9uq1ngs4teaa5f8njhmva2vu5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -43,8 +43,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.fragment_map.view.*
-import kotlinx.android.synthetic.main.history_map.*
-import kotlinx.android.synthetic.main.history_map.view.*
+import kotlinx.android.synthetic.main.dialog_history_map.*
+import kotlinx.android.synthetic.main.dialog_history_map.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo2.ui.fragments.PermissionedFragment
 import java.io.IOException
 import java.util.*
@@ -403,7 +403,7 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
 
     @OnClick(R.id.historyMap)
     fun onclickHistoryMap(view: View){
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.history_map, null)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_history_map, null)
         val mBuilder = AlertDialog.Builder(context)
             .setView(dialogView)
 
@@ -436,7 +436,7 @@ class MapFragment : PermissionedFragment(REQUEST_CODE), OnMapReadyCallback,
         }
         if (this.location != null) {
             location.let { this.location = it }
-            if(!aproximaBoolean){
+            if(!aproximaBoolean && location != null){
                 zoom()
                 aproximaBoolean = true
             }

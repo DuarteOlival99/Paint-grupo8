@@ -1,12 +1,10 @@
 package com.example.paint.ui.fragments
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +16,8 @@ import butterknife.OnClick
 import butterknife.Optional
 import com.example.paint.R
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.paint_fragment.*
 import yuku.ambilwarna.AmbilWarnaDialog
 
@@ -29,6 +29,9 @@ class PaintFragment : Fragment(){
     private var canvasColor = R.color.colorBackground
     val canvasFragment : CanvasFragment = CanvasFragment()
     val paleteFragment : PaleteFragment = PaleteFragment()
+
+    private var mFirebaseStorage = FirebaseStorage.getInstance()
+    private var mStorageRef: StorageReference? = null
 
 
     override fun onCreateView(
@@ -45,6 +48,8 @@ class PaintFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mStorageRef = FirebaseStorage.getInstance().reference;
 
         if((activity as AppCompatActivity).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
         {
@@ -78,6 +83,18 @@ class PaintFragment : Fragment(){
     override fun onDestroy() {
         super.onDestroy()
     }
+
+    @Optional
+    @OnClick(R.id.textView_clean)
+    fun onClickTextViewTeste(view: View){
+
+        Toast.makeText(context, "Clean screen", Toast.LENGTH_SHORT).show();
+        val fragment =
+            parentFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+        fragment.cleanScreen()
+
+    }
+
 
     @Optional
     @OnClick(R.id.button_up)

@@ -22,4 +22,8 @@
     <string name="cor_pincel_alterada">Brush Color Changed</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="dark_mode_automatico_aos_20_de_bateria">Auto Dark Mode bellow 20% battery</string>
+    <string name="guardar">Upload</string>
+    <string name="insira_o_nome_da_imagem">Enter name for Image</string>
+    <string name="save">Save</string>
+    <string name="clean">Clean</string>
 </resources>

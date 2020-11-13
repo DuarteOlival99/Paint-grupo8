@@ -47,4 +47,15 @@
     <string name="origem">Origem:</string>
     <string name="destino">Destino:</string>
 
+    <string name="sem_permissao">Acesso negado à camera</string>
+    <string name="com_permissao">Acesso garantido à camera</string>
+    <string name="sem_foto">Ainda não tirou uma foto ao lugar</string>
+    <string name="clean">Apagar</string>
+    <string name="save">Guardar</string>
+    <string name="get_history_canvas">get history canvas</string>
+    <string name="insira_o_nome_da_imagem">Insira o nome da imagem</string>
+    <string name="guardar">Guardar</string>
+    <string name="canvas_historico">Canvas Histórico</string>
+    <string name="sem_titulo">Sem titulo</string>
+
 </resources>

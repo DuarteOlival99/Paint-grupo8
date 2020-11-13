@@ -8,15 +8,23 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.example.paint.R
 import com.example.paint.data.local.list.ListStorage
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageMetadata
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.paint_fragment.*
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 
 private const val STROKE_WIDTH = 12f // has to be floats
 
 open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
+    private var mFirebaseStorage = FirebaseStorage.getInstance()
     private val paint = Paint()
     private val path = Path()
     private var mGestureDetector: GestureDetector? = null
@@ -262,6 +270,41 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
     fun cleanScreen() {
         extraCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
         invalidate()
+    }
+
+    fun saveFirebaseCanvas(imageTitle : String){
+
+        val outputStream : ByteArrayOutputStream = ByteArrayOutputStream()
+        extraBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        val data = outputStream.toByteArray()
+
+        val path : String = "images/canvas/" + imageTitle + " || " + UUID.randomUUID() + ".png"
+        val fireTeste : StorageReference = mFirebaseStorage.getReference(path)
+
+        val metadata : StorageMetadata = StorageMetadata.Builder()
+            .setCustomMetadata("Canvas", imageTitle)
+            .build()
+
+        val uploadTask : UploadTask = fireTeste.putBytes(data, metadata)
+
+        uploadTask.addOnCompleteListener {
+            if (uploadTask.isComplete){
+                Toast.makeText(context, "Canvas guardado com sucesso", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+//        uploadTask.addOnSuccessListener {
+//            Toast.makeText(context, "sucess", Toast.LENGTH_SHORT).show()
+//        }
+
+        uploadTask.addOnFailureListener{
+            Toast.makeText(context, "Ocurreu um erro ao guardar o Canvas", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    fun getImageCanvas(): Bitmap? {
+        return extraBitmap
     }
 
 

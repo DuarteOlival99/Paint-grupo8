@@ -1,6 +1,7 @@
 package com.example.paint.ui.fragments
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -21,6 +22,7 @@ import com.example.paint.data.sensors.shake.ShakeDetector
 import com.example.paint.ui.listeners.GestureListener
 import com.example.paint.ui.utils.MyCanvasView
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
+import kotlinx.android.synthetic.main.activity_paint.*
 
 
 class CanvasFragment : Fragment(){
@@ -165,6 +167,14 @@ class CanvasFragment : Fragment(){
                 canvasView.cleanScreen()
             }
         })
+    }
+
+    fun saveFirebaseCanvas(imageTitle : String){
+        canvasView.saveFirebaseCanvas(imageTitle)
+    }
+
+    fun getImageCanvas(): Bitmap? {
+        return canvasView.getImageCanvas()
     }
 
 }

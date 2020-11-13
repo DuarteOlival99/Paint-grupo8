@@ -6,7 +6,7 @@ import java.util.*
 data class HistoryRoute(
     var posicaoInicial: Location?,
     var posicaoFinal: Location?,
-    var path: List<Route>,
+    var path: List<Path>,
 
 ) {
 

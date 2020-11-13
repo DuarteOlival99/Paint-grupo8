@@ -40,4 +40,13 @@
 
     </group>
 
+    <group>
+        <item
+            android:id="@+id/teste"
+            android:icon="@drawable/ic_about"
+            android:title="teste"
+            />
+
+    </group>
+
 </menu>
