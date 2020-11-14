@@ -1,6 +1,5 @@
 package com.example.paint.ui.utils
 
-import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -56,10 +55,10 @@ class NavigationManager {
             )
         }
 
-        fun goToTeste(fm: FragmentManager) {
+        fun goToCamera(fm: FragmentManager) {
             placeFragment(
                 fm,
-                testeFragment()
+                CameraFragment()
             )
         }
 

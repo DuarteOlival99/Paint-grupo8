@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -25,7 +24,6 @@ import butterknife.Optional
 import com.example.paint.R
 import com.example.paint.data.entity.Upload
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
@@ -37,7 +35,7 @@ import com.google.firebase.storage.UploadTask
 import java.io.ByteArrayOutputStream
 import java.util.*
 
-class testeFragment : Fragment(){
+class CameraFragment : Fragment(){
     private lateinit var viewModel: PaintViewModel
     lateinit var currentPhotoPath: String
     private var imageView: ImageView? = null
@@ -79,12 +77,12 @@ class testeFragment : Fragment(){
             ) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
                 arrayOf(android.Manifest.permission.CAMERA),
-                testeFragment.MY_CAMERA_PERMISSION_CODE
+                CameraFragment.MY_CAMERA_PERMISSION_CODE
             )
         } else {
             val cameraIntent =
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(cameraIntent, testeFragment.CAMERA_REQUEST)
+            startActivityForResult(cameraIntent, CameraFragment.CAMERA_REQUEST)
         }
 
     }
@@ -138,8 +136,7 @@ class testeFragment : Fragment(){
                     while (!uri.isComplete);
                     val url: Uri = uri.result!!
                     Toast.makeText(
-                                context, "Upload Success, download URL " +
-                                url.toString(), Toast.LENGTH_LONG
+                                context, "Upload Success" , Toast.LENGTH_LONG
                     ).show()
                     val upload = Upload(
                         path,

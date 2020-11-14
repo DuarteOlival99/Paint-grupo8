@@ -24,6 +24,15 @@
 
     <group>
         <item
+            android:id="@+id/camera"
+            android:icon="@drawable/ic_baseline_camera"
+            android:title="@string/camera"
+            />
+
+    </group>
+
+    <group>
+        <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings"
@@ -36,15 +45,6 @@
             android:id="@+id/about"
             android:icon="@drawable/ic_about"
             android:title="@string/about"
-            />
-
-    </group>
-
-    <group>
-        <item
-            android:id="@+id/teste"
-            android:icon="@drawable/ic_about"
-            android:title="teste"
             />
 
     </group>

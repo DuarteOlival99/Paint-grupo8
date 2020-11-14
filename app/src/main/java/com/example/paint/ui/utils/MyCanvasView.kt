@@ -306,8 +306,7 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
                 while (!uri.isComplete);
                 val url: Uri = uri.result!!
                 Toast.makeText(
-                    context, "Upload Success, download URL " +
-                            url.toString(), Toast.LENGTH_LONG
+                    context, "Upload Success", Toast.LENGTH_LONG
                 ).show()
                 val upload = Upload(
                     imageTitle,

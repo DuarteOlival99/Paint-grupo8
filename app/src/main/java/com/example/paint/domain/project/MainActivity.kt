@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(),
     private var mFirebaseStorage = FirebaseStorage.getInstance()
     val imageRef = Firebase.storage.reference
     var listImagesFinal = mutableListOf<HistoryCanvas>()
+    private var menuAtual = "Paint"
 
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
@@ -61,33 +62,43 @@ class MainActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.paint -> {
                 title = getText(R.string.paint).toString()
+                menuAtual = getText(R.string.paint).toString()
                 NavigationManager.goToPaint(
                     supportFragmentManager
                 )
+                invalidateOptionsMenu()
             }
             R.id.map -> {
                 title = getText(R.string.map).toString()
+                menuAtual = getText(R.string.map).toString()
                 NavigationManager.goToMap(
                     supportFragmentManager
                 )
+                invalidateOptionsMenu()
             }
             R.id.settings -> {
                 title = getText(R.string.settings).toString()
+                menuAtual = getText(R.string.settings).toString()
                 NavigationManager.goToSettings(
                     supportFragmentManager
                 )
+                invalidateOptionsMenu()
             }
             R.id.about -> {
                 title = getText(R.string.about).toString()
+                menuAtual = getText(R.string.about).toString()
                 NavigationManager.goToAbout(
                     supportFragmentManager
                 )
+                invalidateOptionsMenu()
             }
-            R.id.teste -> {
-                title = "teste"
-                NavigationManager.goToTeste(
+            R.id.camera -> {
+                title = getText(R.string.camera).toString()
+                menuAtual = getText(R.string.camera).toString()
+                NavigationManager.goToCamera(
                     supportFragmentManager
                 )
+                invalidateOptionsMenu()
             }
         }
         drawer.closeDrawer(GravityCompat.START)
@@ -97,13 +108,22 @@ class MainActivity : AppCompatActivity(),
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater : MenuInflater = menuInflater
         inflater.inflate(R.menu.options_menu, menu);
+        val itemSave = menu!!.findItem(R.id.save_canvas)
+        val itemGetHistoryCanvas = menu.findItem(R.id.get_history_canvas)
+        if(menuAtual != getText(R.string.paint).toString()){
+            itemGetHistoryCanvas.isVisible = false
+            itemSave.isVisible = false
+        }else{
+            itemGetHistoryCanvas.isVisible = true
+            itemSave.isVisible = true
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId;
         when(item.itemId) {
-            R.id.save_menu -> {
+            R.id.save_canvas -> {
                 val fragmentCanvas =
                     supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
                 val dialogView = LayoutInflater.from(this).inflate(

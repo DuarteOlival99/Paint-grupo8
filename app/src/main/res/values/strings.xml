@@ -57,5 +57,6 @@
     <string name="guardar">Guardar</string>
     <string name="canvas_historico">Canvas Histórico</string>
     <string name="sem_titulo">Sem titulo</string>
+    <string name="camera">Camera</string>
 
 </resources>
