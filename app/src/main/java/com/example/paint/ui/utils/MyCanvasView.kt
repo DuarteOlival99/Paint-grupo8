@@ -1,7 +1,9 @@
 package com.example.paint.ui.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
+import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
 import android.view.GestureDetector
@@ -11,7 +13,12 @@ import android.view.ViewConfiguration
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.example.paint.R
+import com.example.paint.data.entity.Upload
 import com.example.paint.data.local.list.ListStorage
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
@@ -25,6 +32,7 @@ private const val STROKE_WIDTH = 12f // has to be floats
 
 open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListener {
     private var mFirebaseStorage = FirebaseStorage.getInstance()
+    private var mDatabaseStorage = FirebaseDatabase.getInstance()
     private val paint = Paint()
     private val path = Path()
     private var mGestureDetector: GestureDetector? = null
@@ -280,6 +288,7 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
 
         val path : String = "images/canvas/" + imageTitle + " || " + UUID.randomUUID() + ".png"
         val fireTeste : StorageReference = mFirebaseStorage.getReference(path)
+        val mDatabaseRef : DatabaseReference = mDatabaseStorage.getReference("image/canvas/")
 
         val metadata : StorageMetadata = StorageMetadata.Builder()
             .setCustomMetadata("Canvas", imageTitle)
@@ -287,19 +296,28 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
 
         val uploadTask : UploadTask = fireTeste.putBytes(data, metadata)
 
-        uploadTask.addOnCompleteListener {
-            if (uploadTask.isComplete){
-                Toast.makeText(context, "Canvas guardado com sucesso", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-//        uploadTask.addOnSuccessListener {
-//            Toast.makeText(context, "sucess", Toast.LENGTH_SHORT).show()
-//        }
-
-        uploadTask.addOnFailureListener{
-            Toast.makeText(context, "Ocurreu um erro ao guardar o Canvas", Toast.LENGTH_SHORT).show()
-        }
+        uploadTask.addOnFailureListener(
+        ) { e ->
+            Toast.makeText(
+                context, "Upload Error: " +
+                        e.message, Toast.LENGTH_LONG
+            ).show()
+        }.addOnSuccessListener(
+            OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot -> //Uri url = taskSnapshot.getDownloadUrl();
+                val uri: Task<Uri> = taskSnapshot.storage.downloadUrl
+                while (!uri.isComplete);
+                val url: Uri = uri.result!!
+                Toast.makeText(
+                    context, "Upload Success, download URL " +
+                            url.toString(), Toast.LENGTH_LONG
+                ).show()
+                val upload = Upload(
+                    imageTitle,
+                    url.toString()
+                )
+                mDatabaseRef.push().setValue(upload)
+                Log.i("FBApp1_URL ", url.toString())
+            })
 
     }
 

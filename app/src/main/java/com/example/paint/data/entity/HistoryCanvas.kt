@@ -6,7 +6,7 @@ import java.util.*
 
 data class HistoryCanvas(
     var title: String,
-    var image : Bitmap,
+   // var image : Bitmap,
     var url : String
 ) {
 

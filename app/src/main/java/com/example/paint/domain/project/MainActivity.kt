@@ -1,9 +1,7 @@
 package com.example.paint.domain.project
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,26 +18,34 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paint.R
-import com.example.paint.data.entity.HistoryRoute
+import com.example.paint.data.entity.HistoryCanvas
 import com.example.paint.data.sensors.battery.OnBatteryCurrentListener
 import com.example.paint.ui.adapters.HistoryCanvasListAdapter
-import com.example.paint.ui.adapters.HistoryListAdapter
 import com.example.paint.ui.fragments.CanvasFragment
 import com.example.paint.ui.utils.NavigationManager
-import com.example.paint.ui.viewmodels.viewmodels.MapViewModel
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_history_canvas.*
-import kotlinx.android.synthetic.main.dialog_history_map.*
 import kotlinx.android.synthetic.main.dialog_save_canvas.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener, OnBatteryCurrentListener {
 
     private lateinit var viewModel: PaintViewModel
+    private var mFirebaseStorage = FirebaseStorage.getInstance()
+    val imageRef = Firebase.storage.reference
+    var listImagesFinal = mutableListOf<HistoryCanvas>()
 
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
@@ -119,28 +125,46 @@ class MainActivity : AppCompatActivity(),
 
                 val mAlertDialog = mBuilder.show()
 
-//                mAlertDialog.list_history_canvas.layoutManager = LinearLayoutManager(this)
-//                mAlertDialog.list_history_canvas.adapter =
-//                    HistoryCanvasListAdapter(
-//                        viewModel,
-//                        this,
-//                        R.layout.history_canvas_expression,
-//                        viewModel.getCanvasHistory()
-//                    )
+                listFiles(mAlertDialog)
 
-                mAlertDialog.buttonUpload.setOnClickListener {
-                    val imageTitle : String = mAlertDialog.editText.text.toString()
-                    fragment.saveFirebaseCanvas(imageTitle)
-                    mAlertDialog.dismiss()
-                }
-
-                mAlertDialog.dialog_save_canvas_close.setOnClickListener {
+                mAlertDialog.dialog_history_canvas_close.setOnClickListener {
                     mAlertDialog.dismiss()
                 }
             }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun listFiles(mAlertDialog: AlertDialog) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val images = imageRef.child("images/canvas/").listAll().await()
+            var listImages = mutableListOf<HistoryCanvas>()
+            for(image in images.items) {
+                val url = image.downloadUrl.await()
+                val title = image.name.split(" || ").map { it -> it.trim() }
+                val imageCanvas = HistoryCanvas(title[0],url.toString())
+                listImages.add(imageCanvas)
+                Log.i("imageCanvas", imageCanvas.toString())
+            }
+            Log.i("teste", listImages.toString())
+            listImagesFinal = listImages
+            withContext(Dispatchers.Main) {
+                Log.i("teste", listImages.toString())
+                mAlertDialog.list_history_canvas.layoutManager = LinearLayoutManager(this@MainActivity)
+                mAlertDialog.list_history_canvas.adapter =
+                    HistoryCanvasListAdapter(
+                        viewModel,
+                        this@MainActivity,
+                        R.layout.history_canvas_expression,
+                        listImages
+                    )
+            }
+        } catch(e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

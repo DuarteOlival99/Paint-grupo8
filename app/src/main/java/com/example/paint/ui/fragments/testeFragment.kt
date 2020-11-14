@@ -23,6 +23,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Optional
 import com.example.paint.R
+import com.example.paint.data.entity.Upload
 import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -117,7 +118,7 @@ class testeFragment : Fragment(){
 
             val path : String = "images/camera/" + UUID.randomUUID() + ".png"
             val mStorageRef : StorageReference = mFirebaseStorage.getReference(path)
-            val mDatabaseRef : DatabaseReference = mDatabaseStorage.getReference("image")
+            val mDatabaseRef : DatabaseReference = mDatabaseStorage.getReference("image/camera/")
 
             val metadata : StorageMetadata = StorageMetadata.Builder()
                 .setCustomMetadata("caption", "teste")
@@ -140,6 +141,11 @@ class testeFragment : Fragment(){
                                 context, "Upload Success, download URL " +
                                 url.toString(), Toast.LENGTH_LONG
                     ).show()
+                    val upload = Upload(
+                        path,
+                        url.toString()
+                    )
+                    mDatabaseRef.push().setValue(upload)
                     Log.i("FBApp1_URL ", url.toString())
                 })
 
