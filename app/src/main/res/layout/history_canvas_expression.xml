@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/cardView_history"
+    android:id="@+id/cardView_canvas_history"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/CardView.Light"

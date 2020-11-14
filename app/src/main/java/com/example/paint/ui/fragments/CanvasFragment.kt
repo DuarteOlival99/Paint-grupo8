@@ -177,4 +177,8 @@ class CanvasFragment : Fragment(){
         return canvasView.getImageCanvas()
     }
 
+    fun setCanvasImage(bitmapFromURL: Bitmap?) {
+        canvasView.setCanvasImage(bitmapFromURL)
+    }
+
 }

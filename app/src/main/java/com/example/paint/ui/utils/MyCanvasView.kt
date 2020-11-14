@@ -1,6 +1,5 @@
 package com.example.paint.ui.utils
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.net.Uri
@@ -23,7 +22,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import kotlinx.android.synthetic.main.paint_fragment.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -280,7 +278,7 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
         invalidate()
     }
 
-    fun saveFirebaseCanvas(imageTitle : String){
+    fun saveFirebaseCanvas(imageTitle: String){
 
         val outputStream : ByteArrayOutputStream = ByteArrayOutputStream()
         extraBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
@@ -323,6 +321,18 @@ open class MyCanvasView(context: Context?) : View(context) , View.OnTouchListene
 
     fun getImageCanvas(): Bitmap? {
         return extraBitmap
+    }
+
+    fun setCanvasImage(bitmapFromURL: Bitmap?) {
+        if (bitmapFromURL != null) {
+
+            val workingBitmap: Bitmap = Bitmap.createBitmap(bitmapFromURL)
+            val mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+            extraBitmap = mutableBitmap
+            extraCanvas = Canvas(extraBitmap)
+            invalidate()
+        }
     }
 
 

@@ -2,9 +2,12 @@ package com.example.paint.domain.project
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,8 +30,8 @@ import com.example.paint.ui.viewmodels.viewmodels.PaintViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_history_canvas.*
 import kotlinx.android.synthetic.main.dialog_save_canvas.*
@@ -37,6 +40,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class MainActivity : AppCompatActivity(),
@@ -97,18 +104,22 @@ class MainActivity : AppCompatActivity(),
         val id = item.itemId;
         when(item.itemId) {
             R.id.save_menu -> {
-                val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
-                val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_save_canvas, null)
+                val fragmentCanvas =
+                    supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+                val dialogView = LayoutInflater.from(this).inflate(
+                    R.layout.dialog_save_canvas,
+                    null
+                )
                 val mBuilder = AlertDialog.Builder(this)
                     .setView(dialogView)
 
                 val mAlertDialog = mBuilder.show()
 
-                mAlertDialog.imageView.setImageBitmap( fragment.getImageCanvas())
+                mAlertDialog.imageView.setImageBitmap(fragmentCanvas.getImageCanvas())
 
                 mAlertDialog.buttonUpload.setOnClickListener {
-                    val imageTitle : String = mAlertDialog.editText.text.toString()
-                    fragment.saveFirebaseCanvas(imageTitle)
+                    val imageTitle: String = mAlertDialog.editText.text.toString()
+                    fragmentCanvas.saveFirebaseCanvas(imageTitle)
                     mAlertDialog.dismiss()
                 }
 
@@ -118,8 +129,12 @@ class MainActivity : AppCompatActivity(),
 
             }
             R.id.get_history_canvas -> {
-                val fragment = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
-                val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_history_canvas, null)
+                val fragment =
+                    supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+                val dialogView = LayoutInflater.from(this).inflate(
+                    R.layout.dialog_history_canvas,
+                    null
+                )
                 val mBuilder = AlertDialog.Builder(this)
                     .setView(dialogView)
 
@@ -143,7 +158,7 @@ class MainActivity : AppCompatActivity(),
             for(image in images.items) {
                 val url = image.downloadUrl.await()
                 val title = image.name.split(" || ").map { it -> it.trim() }
-                val imageCanvas = HistoryCanvas(title[0],url.toString())
+                val imageCanvas = HistoryCanvas(title[0], url.toString())
                 listImages.add(imageCanvas)
                 Log.i("imageCanvas", imageCanvas.toString())
             }
@@ -157,10 +172,12 @@ class MainActivity : AppCompatActivity(),
                         viewModel,
                         this@MainActivity,
                         R.layout.history_canvas_expression,
-                        listImages
+                        listImages,
+                        this@MainActivity,
+                        mAlertDialog
                     )
             }
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
             }
@@ -245,6 +262,30 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCurrentChanged(current: Double) {
         Log.i("current", current.toString())
+    }
+
+    fun setCanvasImage(url: String) {
+        val fragmentCanvas = supportFragmentManager.findFragmentById(R.id.paint_canvas_8) as CanvasFragment
+        val policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        val bitMapUrl = getBitmapFromURL(url)
+        fragmentCanvas.setCanvasImage(bitMapUrl)
+    }
+
+    fun getBitmapFromURL(src: String?): Bitmap? {
+        return try {
+            val url = URL(src)
+            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            val input: InputStream = connection.inputStream
+            BitmapFactory.decodeStream(input)
+        } catch (e: IOException) {
+            // Log exception
+            Log.i("getBitmapFromURL_Error", e.toString())
+            null
+        }
     }
 
 }
