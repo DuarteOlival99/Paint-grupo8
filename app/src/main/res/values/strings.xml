@@ -41,8 +41,8 @@
     <string name="canvasContentDescription" translatable="false">Mini Paint is a simple line drawing app.
    Drag your fingers to draw. Rotate the phone to clear.</string>
     <string name="map">Mapa</string>
-    <string name="start_routing">Start Drawing</string>
-    <string name="stop_drawing">Stop Drawing</string>
+    <string name="start_routing" translatable="false">Start Drawing</string>
+    <string name="stop_drawing" translatable="false">Stop Drawing</string>
     <string name="historico_de_percursos">Histórico de percursos</string>
     <string name="origem">Origem:</string>
     <string name="destino">Destino:</string>
@@ -52,11 +52,12 @@
     <string name="sem_foto">Ainda não tirou uma foto ao lugar</string>
     <string name="clean">Apagar</string>
     <string name="save">Guardar</string>
-    <string name="get_history_canvas">get history canvas</string>
+    <string name="get_history_canvas" translatable="false">get history canvas</string>
     <string name="insira_o_nome_da_imagem">Insira o nome da imagem</string>
     <string name="guardar">Guardar</string>
     <string name="canvas_historico">Canvas Histórico</string>
     <string name="sem_titulo">Sem titulo</string>
     <string name="camera">Camera</string>
+    <string name="ecra_apagado">ecra apagado</string>
 
 </resources>

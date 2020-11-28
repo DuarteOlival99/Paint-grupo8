@@ -26,4 +26,14 @@
     <string name="insira_o_nome_da_imagem">Enter name for Image</string>
     <string name="save">Save</string>
     <string name="clean">Clean</string>
+    <string name="historico_de_percursos">Routing history</string>
+    <string name="destino">Destiny</string>
+    <string name="origem">origin</string>
+    <string name="sem_permissao">Camera access denied</string>
+    <string name="com_permissao">Camera access garanted</string>
+    <string name="sem_foto">You haven\'t taken a photo of the place yet</string>
+    <string name="camera">Camera</string>
+    <string name="canvas_historico">Canvas history</string>
+    <string name="sem_titulo">No title</string>
+    <string name="ecra_apagado">Screen cleaned</string>
 </resources>

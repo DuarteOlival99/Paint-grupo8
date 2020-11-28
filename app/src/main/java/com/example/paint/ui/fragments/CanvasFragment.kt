@@ -163,7 +163,7 @@ class CanvasFragment : Fragment(){
                  * method you would use to setup whatever you want done once the
                  * device has been shook.
                  */
-                Toast.makeText(context, count.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.ecra_apagado), Toast.LENGTH_SHORT).show()
                 canvasView.cleanScreen()
             }
         })

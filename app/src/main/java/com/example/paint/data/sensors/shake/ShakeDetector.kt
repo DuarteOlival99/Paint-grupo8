@@ -4,6 +4,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import kotlin.math.sqrt
 
 class ShakeDetector : SensorEventListener {
@@ -35,6 +36,7 @@ class ShakeDetector : SensorEventListener {
             // gForce will be close to 1 when there is no movement.
             val gForce: Float = sqrt(gX * gX + gY * gY + gZ * gZ)
             //Log.i("ShakeDetector", "x:"+x.toString()+"  y:"+y.toString()+"  z:"+z.toString())
+            Log.i("gFORCE", gForce.toString())
             if (gForce > SHAKE_THRESHOLD_GRAVITY) {
                 val now = System.currentTimeMillis()
                 // ignore shake events too close to each other (500ms)
