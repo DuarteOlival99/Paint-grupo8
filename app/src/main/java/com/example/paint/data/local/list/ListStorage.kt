@@ -212,4 +212,8 @@ class ListStorage private constructor() {
         return historyRoute
     }
 
+    fun getBackgrondColor(): Int? {
+        return backgroundColor
+    }
+
 }

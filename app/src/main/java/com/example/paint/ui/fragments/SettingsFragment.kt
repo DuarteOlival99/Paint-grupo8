@@ -24,6 +24,7 @@ import yuku.ambilwarna.AmbilWarnaDialog
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener
 import kotlin.properties.Delegates
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_about.*
 
 
 class SettingsFragment : Fragment() {
@@ -45,11 +46,12 @@ class SettingsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onStart() {
         super.onStart()
+        //cor de background
+        layout_settings.setBackgroundColor(viewModel.getBackgrondColor()!!)
         //darkMode
         switchButtondark.isChecked = viewModel.getDarkModeBoolean()
         switchButtondarkAutomatico.isChecked = viewModel.getDarkModeAutomatico()
@@ -74,7 +76,7 @@ class SettingsFragment : Fragment() {
             override fun onCancel(dialog: AmbilWarnaDialog) {}
             override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
                 mDefaultColor = color
-                settings.setBackgroundColor(mDefaultColor)
+                layout_settings.setBackgroundColor(mDefaultColor)
 
                 viewModel.setBackgroundColor(mDefaultColor)
 

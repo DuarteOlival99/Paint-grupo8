@@ -28,5 +28,9 @@ class SettingsViewModel ( application: Application ) : AndroidViewModel (applica
         return settingsLogic.getDarkModeAutomatico()
     }
 
+    fun getBackgrondColor(): Int? {
+        return settingsLogic.getBackgrondColor()
+    }
+
 
 }

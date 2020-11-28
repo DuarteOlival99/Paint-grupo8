@@ -25,8 +25,6 @@ class AboutFragment : Fragment(), OnBatteryCurrentListener {
 
     private lateinit var viewModel : AboutViewModel
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -44,7 +42,7 @@ class AboutFragment : Fragment(), OnBatteryCurrentListener {
 
     override fun onStart() {
         super.onStart()
-        about.setBackgroundColor(viewModel.getBackgroundColor()!!)
+        scroll_view_about.setBackgroundColor(viewModel.getBackgroundColor()!!)
 
     }
 

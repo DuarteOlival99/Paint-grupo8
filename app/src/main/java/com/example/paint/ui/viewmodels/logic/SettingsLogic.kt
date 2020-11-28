@@ -30,5 +30,9 @@ class SettingsLogic() {
         return storage.getDarkModeAutomatico()
     }
 
+    fun getBackgrondColor(): Int? {
+        return storage.getBackgrondColor()
+    }
+
 
 }
